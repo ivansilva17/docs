@@ -1,0 +1,4270 @@
+openapi: 3.0.1
+info:
+  title: Full Fabric APIs
+  description: "Welcome to the Full Fabric Public APIs documentation.\n\nFull Fabric\
+    \ uses HTTP verbs and a RESTful endpoint structure.\n\nRequest and response payloads\
+    \ are formatted as JSON.\n\n# API versions\n\n## What is my API version?\n\nYour\
+    \ API version controls the API you see (e.g. what properties you  \nsee in responses,\
+    \ what parameters you’re permitted to send in requests,  \netc.).\n\nWhen we change\
+    \ the API in a backwards-incompatible way, we release a new dated version.\n\n\
+    ## Specifying API version\n\nAll requests require an API version. You can specify\
+    \ a version via the Accept header as below.\n\n```\nAccept: application/json;version=2021-04-13\n\
+    \n ```\n\nAlternatively, you can also the specify a version via an X-API-Version\
+    \ header in which case you can remove the version from the Accept header.\n\n\
+    ```\nX-API-Version: 2021-04-13\nAccept: application/json\n\n ```\n\n# Authentication\n\
+    \nAuthenticate your account when using the API by including your secret API token\
+    \ in the request. Your API tokens carry many privileges, so be sure to keep them\
+    \ secret! Do not share your secret API tokens in publicly accessible areas, client-side\
+    \ code, and so forth.\n\nAll API requests must be made over HTTPS. Calls made\
+    \ over plain HTTP will fail. API requests without authentication will also fail.\n\
+    \n## Authentication via the FF-Auth header\n\nSet a FF-Auth header with your secret\
+    \ API token to authenticate the request.\n\n``` shell\ncurl https://_.fullfabric.com/apis/profiles/profiles/57232561dfc41880050001de\
+    \ \\\n  -H \"Accept: application/json; version=2021-04-13\" \\\n  -H \"FF-Auth:\
+    \ TOKEN\"\n\n ```\n\n# Requests\n\nFull Fabric uses HTTP verbs and a RESTful endpoint\
+    \ structure. Request and response payloads are formatted as JSON.\n\n``` shell\n\
+    curl \\\n  --request GET \\\n  --url https://_.fullfabric.com/apis/profiles/profiles/ID\
+    \ \\\n  --header 'Accept: application/json;version=2021-04-13' \\\n  --header\
+    \ 'FF-Auth: TOKEN'\n\n ```\n\n## Common request headers\n\n| **Name** | **Type**\
+    \ | **Default** |\n| --- | --- | --- |\n| FF-Auth | string | `[user token]` |\n\
+    | Accept | string | `application/json;version=[api version]` |\n\n# Errors\n\n\
+    Full Fabric uses conventional HTTP response codes to indicate the success or failure\
+    \ of an API request. In general, codes in the 2xx range indicate success, codes\
+    \ in the 4xx range indicate an error that failed given the information provided\
+    \ (e.g., a required parameter was omitted, a charge failed, etc.), and codes in\
+    \ the 5xx range indicate an error with our servers (these are rare).\n\n## HTTP\
+    \ status code summary\n\n```\n200 - OK: Everything worked as expected.\n400 -\
+    \ Bad Request: The request was unacceptable, often due to missing a required parameter.\n\
+    401 - Unauthorized: No valid API key provided.\n402 - Request Failed: The parameters\
+    \ were valid but the request failed.\n404 - Not Found: The requested resource\
+    \ doesn't exist.\n422 - Unprocessable Entity: The request is understood but invalid,\
+    \ often due to failed validation.\n429 - Too Many Requests: Too many requests\
+    \ hit the API too quickly.\n50x - Server Errors: Something went wrong on our end.\
+    \ (These are rare.)\n\n ```\n\n## Dealing with API errors\n\nYou may find that\
+    \ you've encountered successive errors when trying to access the API.\n\nRather\
+    \ than ignore repeated 4xx and 5xx status codes, you should ensure that you're\
+    \ correctly interacting with the API. For example, if an endpoint requests a string\
+    \ and you're passing it a numeric value, you're going to receive a validation\
+    \ error, and your call won't succeed. Similarly, attempting to access an unauthorized\
+    \ or nonexistent endpoint will result in a 4xx error.\n\nIntentionally ignoring\
+    \ repeated validation errors may result in the suspension of your app for abuse.\n\
+    \n# Rate limiting\n\nFor API requests using token-based authentication, you can\
+    \ make up to 10000 requests per hour.\n\nThe maximum number of requests you are\
+    \ permitted to make\n\n- per 8 seconds is 40\n    \n- per 60 seconds is 180\n\
+    \    \n- per 3600 seconds is 10000\n    \n\n## Abuse rate limits\n\nIn order to\
+    \ maintain the quality of the service, additional rate limits may apply to some\
+    \ actions when using the API. For example, using the API too rapidly, polling\
+    \ aggressively, making multiple concurrent requests, or repeatedly request data\
+    \ that is computationally expensive may result in abuse rate limiting.\n\nTo avoid\
+    \ hitting this limit, you should ensure your application follows the guidelines\
+    \ below:\n\n- make requests for a single token serially. Do not make requests\
+    \ for a single token concurrently.\n    \n- if you're making a large number of\
+    \ POST, PATCH, PUT, or DELETE requests for a single token, wait at least one second\
+    \ between each request.\n    \n- when you have been limited, use the Retry-After\
+    \ response header to slow down. The value of the Retry-After header will always\
+    \ be an integer, representing the number of seconds until the rate limiting expires."
+  contact: {}
+  version: 1.0.0
+servers:
+- url: //%7B%7Bendpoint%7D%7D
+tags:
+- name: Origin (Admissions)
+  description: |-
+    ### API versions
+
+    - 2021-04-13
+    - 2018-05-05
+- name: Application templates
+- name: Applications
+- name: Evaluations
+- name: Core (Student Information System)
+  description: "### API versions\n\n- 2016-09-16\n    \n- 2024-04-26"
+- name: Courses
+- name: Units
+- name: Student registrations and grades for a unit
+- name: Class study plan
+- name: Lecturers
+- name: Transcripts
+- name: Session lecturer costs
+paths:
+  /apis/applic_templates/templates:
+    get:
+      tags:
+      - Origin (Admissions)
+      - Application templates
+      summary: Get application templates
+      description: This endpoint makes an HTTP GET request to retrieve the list of
+        application templates.
+      operationId: getApplicationTemplates
+      parameters:
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Get application templates
+          headers:
+            Status:
+              schema:
+                type: string
+            Transfer-Encoding:
+              schema:
+                type: string
+            Server:
+              schema:
+                type: string
+            X-Request-Id:
+              schema:
+                type: string
+            X-Runtime:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            X-Frame-Options:
+              schema:
+                type: string
+            Cache-Control:
+              schema:
+                type: string
+            ETag:
+              schema:
+                type: string
+            X-FULLFABRIC-JSON:
+              schema:
+                type: string
+            Content-Encoding:
+              schema:
+                type: string
+            Set-Cookie:
+              schema:
+                type: string
+            FF-Revision:
+              schema:
+                type: string
+            FF-Frontend-Revision:
+              schema:
+                type: string
+            FF-Frontend-CDN:
+              schema:
+                type: string
+            X-Powered-By:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                - closes_at: 1627689600
+                  context_id: 5fd37ffd976a77675b0006dc
+                  context_type: Institutions::ClassOf
+                  id: 5fd37ffd976a77675b0006dd
+                  name: Application form
+                  opens_at: 1609459200
+                  primary_choice_class_of_ids: []
+                  primary_choice_course_ids: []
+                  secondary_choice_class_of_ids: []
+                  secondary_choice_course_ids: []
+                - context_id: 5fd380a3976a77675b003750
+                  context_type: Institutions::ClassOf
+                  id: 5fd380a3976a77675b003751
+                  name: Application form
+                  primary_choice_class_of_ids: []
+                  primary_choice_course_ids: []
+                  secondary_choice_class_of_ids: []
+                  secondary_choice_course_ids: []
+                - context_id: 5fd380a9976a77675b0039b0
+                  context_type: Institutions::ClassOf
+                  id: 5fd380a9976a77675b0039b1
+                  name: Application form
+                  primary_choice_class_of_ids: []
+                  primary_choice_course_ids: []
+                  secondary_choice_class_of_ids: []
+                  secondary_choice_course_ids: []
+                - context_id: 5fd37fef976a77675b000002
+                  context_type: Institutions::Institution
+                  id: 608188c36ab7285403000157
+                  name: multi prog choice with campus
+                  opens_at: 1617577200
+                  primary_choice_class_of_ids:
+                  - 5ff317e19a52af7a130000fd
+                  - 60533f8f9a52af1b28000330
+                  - 5fd3804e976a77675b001cba
+                  - 5ff318953b5d005cb30008ce
+                  primary_choice_course_ids: []
+                  secondary_choice_class_of_ids: []
+                  secondary_choice_course_ids: []
+                - context_id: 5fd37fef976a77675b000002
+                  context_type: Institutions::Institution
+                  id: 608293256ab72809d10002ab
+                  name: multi Programme Choice
+                  opens_at: 1617231600
+                  primary_choice_class_of_ids:
+                  - 5fd380a9976a77675b0039b0
+                  - 5fd3804e976a77675b001cba
+                  - 60533f8f9a52af1b28000330
+                  - 5ff317e19a52af7a130000fd
+                  - 60e303c79a52af5496000381
+                  - 612f406f6ab72867ea00011f
+                  - 60e737dd6ab728076b000542
+                  primary_choice_course_ids:
+                  - 602d1a2f6ab7283c1800018a
+                  - 60521a5c6ab7285d77000318
+                  - 60ca5ae46ab7282b1e000507
+                  - 6023b5043b5d00154400010f
+                  - 6113f1036ab7284e2400019e
+                  - 6017de289a52af044f0002ee
+                  - 60accc1e9a52af690100041c
+                  secondary_choice_class_of_ids: []
+                  secondary_choice_course_ids: []
+                - context_id: 5fd37fef976a77675b000002
+                  context_type: Institutions::Institution
+                  id: 60b8a28d6ab728205700036a
+                  name: Plain application template
+                  opens_at: 1622502000
+                  primary_choice_class_of_ids:
+                  - 627930cb6ab72816900000a0
+                  - 627932f69a52af16ab000381
+                  - 624d349b3b5d00124600015f
+                  - 627932d59a52af16ab00030b
+                  - 621755b06ab72861140004a4
+                  - 6279310c6ab728796a000244
+                  primary_choice_course_ids: []
+                  secondary_choice_class_of_ids: []
+                  secondary_choice_course_ids: []
+                - closes_at: 1665702000
+                  context_id: 5fd37fef976a77675b000002
+                  context_type: Institutions::Institution
+                  id: 61013af33b5d00505900027c
+                  name: MBA 2022 . 23
+                  opens_at: 1627772400
+                  primary_choice_class_of_ids:
+                  - 624c29b83b5d00481d0000ba
+                  - 63a4981b3b5d004cfb0001d0
+                  primary_choice_course_ids:
+                  - 633d9bf56ab7285af3000404
+                  secondary_choice_class_of_ids: []
+                  secondary_choice_course_ids: []
+                - context_id: 5fd37fef976a77675b000002
+                  context_type: Institutions::Institution
+                  id: 618a65489a52af603e00008d
+                  name: Enrolment form
+                  opens_at: 1635724800
+                  primary_choice_class_of_ids: []
+                  primary_choice_course_ids: []
+                  secondary_choice_class_of_ids: []
+                  secondary_choice_course_ids: []
+                - context_id: 5fd37fef976a77675b000002
+                  context_type: Institutions::Institution
+                  id: 6193ee009a52af5d4f0000e8
+                  name: no first last name simple application form
+                  opens_at: 1635724800
+                  primary_choice_class_of_ids: []
+                  primary_choice_course_ids: []
+                  secondary_choice_class_of_ids: []
+                  secondary_choice_course_ids: []
+                - context_id: 5fd37fef976a77675b000002
+                  context_type: Institutions::Institution
+                  id: 621756069a52af752c0003d7
+                  name: Certificate Registration Form
+                  opens_at: 1643673600
+                  primary_choice_class_of_ids:
+                  - 624c29b83b5d00481d0000ba
+                  primary_choice_course_ids: []
+                  secondary_choice_class_of_ids: []
+                  secondary_choice_course_ids: []
+                items:
+                  type: object
+                  properties:
+                    closes_at:
+                      type: number
+                      nullable: true
+                      example: 1627689600
+                    context_id:
+                      type: string
+                      example: 5fd37ffd976a77675b0006dc
+                    context_type:
+                      type: string
+                      example: Institutions::ClassOf
+                    id:
+                      type: string
+                      example: 5fd37ffd976a77675b0006dd
+                    name:
+                      type: string
+                      example: Application form
+                    opens_at:
+                      type: number
+                      nullable: true
+                      example: 1609459200
+                    primary_choice_class_of_ids:
+                      type: array
+                      example: []
+                      items:
+                        type: object
+                    primary_choice_course_ids:
+                      type: array
+                      example: []
+                      items:
+                        type: object
+                    secondary_choice_class_of_ids:
+                      type: array
+                      example: []
+                      items:
+                        type: object
+                    secondary_choice_course_ids:
+                      type: array
+                      example: []
+                      items:
+                        type: object
+  /apis/applic_templates/templates/{application_template_id}:
+    get:
+      tags:
+      - Origin (Admissions)
+      - Application templates
+      summary: Get application template by ID
+      description: This endpoint makes an HTTP GET request to retrieve details of
+        a specific application template by providing the application_template_id in
+        the URL.
+      operationId: getApplicationTemplateById
+      parameters:
+      - name: application_template_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Get application template by ID
+          headers:
+            Status:
+              schema:
+                type: string
+            Transfer-Encoding:
+              schema:
+                type: string
+            Server:
+              schema:
+                type: string
+            X-Request-Id:
+              schema:
+                type: string
+            X-Runtime:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            X-Frame-Options:
+              schema:
+                type: string
+            Cache-Control:
+              schema:
+                type: string
+            ETag:
+              schema:
+                type: string
+            Content-Encoding:
+              schema:
+                type: string
+            Set-Cookie:
+              schema:
+                type: string
+            FF-Revision:
+              schema:
+                type: string
+            FF-Frontend-Revision:
+              schema:
+                type: string
+            FF-Frontend-CDN:
+              schema:
+                type: string
+            X-Powered-By:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  closes_at:
+                    type: number
+                    example: 1627689600
+                  context_id:
+                    type: string
+                    example: 5fd37ffd976a77675b0006dc
+                  context_type:
+                    type: string
+                    example: Institutions::ClassOf
+                  id:
+                    type: string
+                    example: 5fd37ffd976a77675b0006dd
+                  name:
+                    type: string
+                    example: Application form
+                  opens_at:
+                    type: number
+                    example: 1609459200
+                  primary_choice_class_of_ids:
+                    type: array
+                    example: []
+                    items:
+                      type: object
+                  primary_choice_course_ids:
+                    type: array
+                    example: []
+                    items:
+                      type: object
+                  secondary_choice_class_of_ids:
+                    type: array
+                    example: []
+                    items:
+                      type: object
+                  secondary_choice_course_ids:
+                    type: array
+                    example: []
+                    items:
+                      type: object
+  /apis/applic_templates/templates/{application_template_id}/choices/primary:
+    post:
+      tags:
+      - Origin (Admissions)
+      - Application templates
+      summary: Add choices to application template
+      description: This HTTP POST request is used to add a primary choices for a specific
+        application template.
+      operationId: addChoicesToApplicationTemplate
+      parameters:
+      - name: application_template_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: "choice[course_ids][]"
+        in: query
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                choice:
+                  type: object
+                  properties:
+                    course_ids:
+                      type: array
+                      example:
+                      - 5d65665d60cb652210000046
+                      - 5d65665d60cb65221000004c
+                      items:
+                        type: string
+                        example: 5d65665d60cb652210000046
+        required: false
+      responses:
+        "200":
+          description: Add choices to application template
+          headers:
+            Status:
+              schema:
+                type: string
+            Transfer-Encoding:
+              schema:
+                type: string
+            Server:
+              schema:
+                type: string
+            X-Request-Id:
+              schema:
+                type: string
+            X-Runtime:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            X-Frame-Options:
+              schema:
+                type: string
+            Cache-Control:
+              schema:
+                type: string
+            ETag:
+              schema:
+                type: string
+            Content-Encoding:
+              schema:
+                type: string
+            Set-Cookie:
+              schema:
+                type: string
+            FF-Revision:
+              schema:
+                type: string
+            FF-Frontend-Revision:
+              schema:
+                type: string
+            FF-Frontend-CDN:
+              schema:
+                type: string
+            X-Powered-By:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  closes_at:
+                    type: number
+                    example: 1627689600
+                  context_id:
+                    type: string
+                    example: 5fd37ffd976a77675b0006dc
+                  context_type:
+                    type: string
+                    example: Institutions::ClassOf
+                  id:
+                    type: string
+                    example: 5fd37ffd976a77675b0006dd
+                  name:
+                    type: string
+                    example: Application form
+                  opens_at:
+                    type: number
+                    example: 1609459200
+                  primary_choice_class_of_ids:
+                    type: array
+                    example: []
+                    items:
+                      type: object
+                  primary_choice_course_ids:
+                    type: array
+                    example: []
+                    items:
+                      type: object
+                  secondary_choice_class_of_ids:
+                    type: array
+                    example: []
+                    items:
+                      type: object
+                  secondary_choice_course_ids:
+                    type: array
+                    example: []
+                    items:
+                      type: object
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - Origin (Admissions)
+      - Application templates
+      summary: Remove choices from application template
+      description: This HTTP DELETE request is used to delete the primary choice for
+        a specific application template. The `:application_template_id` path parameter
+        should be replaced with the actual ID of the application template.
+      operationId: removeChoicesFromApplicationTemplate
+      parameters:
+      - name: application_template_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: "choice[course_ids][]"
+        in: query
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                choice:
+                  type: object
+                  properties:
+                    class_ids:
+                      type: array
+                      example:
+                      - 5d65665d60cb652210000046
+                      - 5d65665d60cb65221000004c
+                      - 5d65665e60cb652210000168
+                      - 5d65665e60cb65221000016d
+                      - 5d65665e60cb652210000172
+                      - 5d65665e60cb6522100001e8
+                      - 5d65665e60cb6522100001fa
+                      - 5d65665e60cb6522100001ff
+                      - 5d65665e60cb652210000204
+                      - 5d65665f60cb652210000255
+                      - 5d65665f60cb65221000025b
+                      - 5d65665f60cb6522100002ee
+                      - 5d65665f60cb652210000332
+                      - 5d65665f60cb652210000337
+                      - 5d65665f60cb65221000033c
+                      - 5d65665f60cb652210000348
+                      - 5d65666060cb652210000414
+                      - 5d65666060cb65221000045d
+                      - 5d65666160cb6522100004ef
+                      - 5d65666260cb6522100004f4
+                      - 5d65666260cb6522100004f9
+                      - 5d65666260cb65221000053d
+                      - 5d65666360cb652210000689
+                      - 5d65666360cb65221000068e
+                      - 5d65666360cb652210000693
+                      - 5d65666360cb6522100006a3
+                      - 5d65666460cb65221000076b
+                      - 5d65666460cb652210000770
+                      - 5d65666460cb65221000081d
+                      - 5d65666460cb652210000822
+                      - 5d65666460cb652210000827
+                      - 5d65666560cb652210000833
+                      - 5d65666560cb652210000839
+                      - 5d65666660cb652210000a1d
+                      - 5d65666760cb652210000ac4
+                      - 5d65666760cb652210000ac9
+                      - 5d65666760cb652210000ace
+                      - 5d65666760cb652210000ad4
+                      - 5d65666760cb652210000ad9
+                      - 5d65666760cb652210000ade
+                      items:
+                        type: string
+                        example: 5d65665d60cb652210000046
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-codegen-request-body-name: body
+  /apis/applics/applics:
+    get:
+      tags:
+      - Origin (Admissions)
+      - Applications
+      summary: Get applications
+      description: Returns a list of applications for candidate profiles matching
+        specific criteria e.g. applications submitted for a particular application
+        template after a specific date.
+      operationId: getApplications
+      parameters:
+      - name: limit
+        in: query
+        description: |-
+          A limit on the number of objects to be returned. Limit can range between 1 and 100 items. default: 10 minimum: 1 maximum: 100
+
+          default: 10
+          minimum: 1
+          maximum: 100
+        schema:
+          type: string
+      - name: skip
+        in: query
+        description: |-
+          A cursor allowing to paginate through results.
+
+          default: 0
+        schema:
+          type: string
+      - name: state
+        in: query
+        description: |-
+          A filter on the list based on the state of the application.
+
+          Allowed Values: started, submitted
+        schema:
+          type: string
+      - name: template_id
+        in: query
+        description: Filter by the application template id to retrieve applications
+          for a specific application template. It is only possible to pass a single
+          id.
+        schema:
+          type: string
+      - name: "filter[context][id]"
+        in: query
+        description: "Filter for applications which have at least one associated context\
+          \ with specified context ids e.g. [\"5a81b590d1b7644cfe0000b6\",\"5a81b590d1b7644cfe000d85\"\
+          ]."
+        schema:
+          type: string
+      - name: "filter[context][state]"
+        in: query
+        description: "Filter by applications which have at least one associated context\
+          \ which matches specified profile lifecycle states e.g. [\"prospect::started_application\"\
+          ,\"prospect::cold\"]"
+        schema:
+          type: string
+      - name: "filter[context][campus_id]"
+        in: query
+        description: "Filter by applications which have at least one associated context\
+          \ for specified campus ids e.g. [\"5b3268ee61a5b01972000456\",\"5b3268ee61a5b01972000897\"\
+          ]"
+        schema:
+          type: string
+      - name: last_updated_after
+        in: query
+        description: Filter by application last updated at date in iso 8601
+        schema:
+          type: string
+      - name: last_updated_before
+        in: query
+        description: Filter by application last updated at date in iso 8601
+        schema:
+          type: string
+      - name: started_after
+        in: query
+        description: Filter by application start date in iso 8601
+        schema:
+          type: string
+      - name: started_before
+        in: query
+        description: Filter by application start date in iso 8601
+        schema:
+          type: string
+      - name: submitted_after
+        in: query
+        description: Filter by application submission date in iso 8601
+        schema:
+          type: string
+      - name: submitted_before
+        in: query
+        description: Filter by application submission date in iso 8601
+        schema:
+          type: string
+      - name: unsubmitted_after
+        in: query
+        description: Filter by application unsubmission date in iso 8601
+        schema:
+          type: string
+      - name: unsubmitted_before
+        in: query
+        description: Filter by application unsubmission date in iso 8601
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Get applications
+          headers:
+            Status:
+              schema:
+                type: string
+            Transfer-Encoding:
+              schema:
+                type: string
+            Server:
+              schema:
+                type: string
+            X-Request-Id:
+              schema:
+                type: string
+            X-Runtime:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            X-Frame-Options:
+              schema:
+                type: string
+            Cache-Control:
+              schema:
+                type: string
+            ETag:
+              schema:
+                type: string
+            X-FULLFABRIC-JSON:
+              schema:
+                type: string
+            Content-Encoding:
+              schema:
+                type: string
+            Set-Cookie:
+              schema:
+                type: string
+            FF-Revision:
+              schema:
+                type: string
+            FF-Frontend-Revision:
+              schema:
+                type: string
+            FF-Frontend-CDN:
+              schema:
+                type: string
+            X-Powered-By:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                - associated_context_ids: []
+                  context_id: 5fd37fef976a77675b000002
+                  context_type: Institutions::Institution
+                  created_at: 1607696380
+                  id: 5fd37ffc976a77675b000650
+                  profile_id: 5fd37ffc976a77675b000641
+                  started_at: 1607696380
+                  started_by_id: 5fd37ffc976a77675b000641
+                  state: started
+                  template_id: 5fd37ff4976a77675b000256
+                - associated_context_ids: []
+                  context_id: 5fd37ffd976a77675b0006dc
+                  context_type: Institutions::ClassOf
+                  created_at: 1607696392
+                  id: 5fd38008976a77675b000b16
+                  profile_id: 5fd38008976a77675b000b09
+                  started_at: 1607696392
+                  started_by_id: 5fd38008976a77675b000b09
+                  state: started
+                  template_id: 5fd37ffd976a77675b0006dd
+                - associated_context_ids: []
+                  context_id: 5fd37ffd976a77675b0006dc
+                  context_type: Institutions::ClassOf
+                  created_at: 1607696392
+                  id: 5fd38008976a77675b000b40
+                  profile_id: 5fd38008976a77675b000b34
+                  started_at: 1607696393
+                  started_by_id: 5fd38008976a77675b000b34
+                  state: started
+                  template_id: 5fd37ffd976a77675b0006dd
+                - associated_context_ids: []
+                  context_id: 5fd37ffd976a77675b0006dc
+                  context_type: Institutions::ClassOf
+                  created_at: 1607696393
+                  id: 5fd38009976a77675b000b66
+                  profile_id: 5fd38009976a77675b000b5a
+                  started_at: 1607696393
+                  started_by_id: 5fd38009976a77675b000b5a
+                  state: started
+                  template_id: 5fd37ffd976a77675b0006dd
+                - associated_context_ids: []
+                  context_id: 5fd37ffd976a77675b0006dc
+                  context_type: Institutions::ClassOf
+                  created_at: 1607696394
+                  id: 5fd3800a976a77675b000b8e
+                  profile_id: 5fd38009976a77675b000b82
+                  started_at: 1607696394
+                  started_by_id: 5fd38009976a77675b000b82
+                  state: started
+                  template_id: 5fd37ffd976a77675b0006dd
+                - associated_context_ids: []
+                  context_id: 5fd37ffd976a77675b0006dc
+                  context_type: Institutions::ClassOf
+                  created_at: 1607696394
+                  id: 5fd3800a976a77675b000baf
+                  profile_id: 5fd3800a976a77675b000ba4
+                  started_at: 1607696394
+                  started_by_id: 5fd3800a976a77675b000ba4
+                  state: started
+                  template_id: 5fd37ffd976a77675b0006dd
+                - associated_context_ids: []
+                  context_id: 5fd37ffd976a77675b0006dc
+                  context_type: Institutions::ClassOf
+                  created_at: 1607696395
+                  id: 5fd3800b976a77675b000bd3
+                  profile_id: 5fd3800a976a77675b000bc7
+                  started_at: 1607696395
+                  started_by_id: 5fd3800a976a77675b000bc7
+                  state: started
+                  template_id: 5fd37ffd976a77675b0006dd
+                - associated_context_ids: []
+                  context_id: 5fd37ffd976a77675b0006dc
+                  context_type: Institutions::ClassOf
+                  created_at: 1607696395
+                  id: 5fd3800b976a77675b000bf5
+                  profile_id: 5fd3800b976a77675b000be9
+                  started_at: 1607696395
+                  started_by_id: 5fd3800b976a77675b000be9
+                  state: started
+                  template_id: 5fd37ffd976a77675b0006dd
+                - associated_context_ids: []
+                  context_id: 5fd37ffd976a77675b0006dc
+                  context_type: Institutions::ClassOf
+                  created_at: 1607696396
+                  id: 5fd3800c976a77675b000c1b
+                  profile_id: 5fd3800b976a77675b000c0e
+                  started_at: 1607696396
+                  started_by_id: 5fd3800b976a77675b000c0e
+                  state: started
+                  template_id: 5fd37ffd976a77675b0006dd
+                - associated_context_ids: []
+                  context_id: 5fd37ffd976a77675b0006dc
+                  context_type: Institutions::ClassOf
+                  created_at: 1607696396
+                  id: 5fd3800c976a77675b000c40
+                  profile_id: 5fd3800c976a77675b000c36
+                  started_at: 1607696396
+                  started_by_id: 5fd3800c976a77675b000c36
+                  state: started
+                  template_id: 5fd37ffd976a77675b0006dd
+                items:
+                  type: object
+                  properties:
+                    associated_context_ids:
+                      type: array
+                      example: []
+                      items:
+                        type: object
+                    context_id:
+                      type: string
+                      example: 5fd37fef976a77675b000002
+                    context_type:
+                      type: string
+                      example: Institutions::Institution
+                    created_at:
+                      type: number
+                      example: 1607696380
+                    id:
+                      type: string
+                      example: 5fd37ffc976a77675b000650
+                    last_updated_at:
+                      type: object
+                      nullable: true
+                      example: "null"
+                    profile_id:
+                      type: string
+                      example: 5fd37ffc976a77675b000641
+                    started_at:
+                      type: number
+                      example: 1607696380
+                    started_by_id:
+                      type: string
+                      example: 5fd37ffc976a77675b000641
+                    state:
+                      type: string
+                      example: started
+                    submitted_at:
+                      type: object
+                      nullable: true
+                      example: "null"
+                    submitted_by_id:
+                      type: object
+                      nullable: true
+                      example: "null"
+                    template_id:
+                      type: string
+                      example: 5fd37ff4976a77675b000256
+                    unsubmitted_at:
+                      type: object
+                      nullable: true
+                      example: "null"
+  /apis/applics/applics/{application_id.pdf}:
+    get:
+      tags:
+      - Origin (Admissions)
+      - Applications
+      summary: Get an application PDF
+      description: "Returns the PDF download of the application including all fields\
+        \ and sections and with compatible file uploads merged to the PDF e.g. image,\
+        \ MS Word and PDF files."
+      operationId: getAnApplicationPdf
+      parameters:
+      - name: application_id.pdf
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ""
+          content: {}
+  /apis/applics/applics/{application_id.zip}:
+    get:
+      tags:
+      - Origin (Admissions)
+      - Applications
+      summary: Get an application ZIP
+      description: Returns the ZIP download of the application including the application
+        PDF and all files uploaded to the application.
+      operationId: getAnApplicationZip
+      parameters:
+      - name: application_id.zip
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ""
+          content: {}
+  /apis/applics/applics/{application_id}:
+    get:
+      tags:
+      - Origin (Admissions)
+      - Applications
+      summary: Get an application
+      description: "Returns the full information of a specific application of a candidate.\
+        \ This includes but is not limited to:\n\n- All of the answers to all of the\
+        \ fields, including file uploads\n- The application template (application\
+        \ form)\n- The application state: started/submitted\n- The primary and secondary\
+        \ product choice\n- Reference forms submitted by referees\n- Application fee\
+        \ payments\n    \n\nPlease see the example response for more information."
+      operationId: getAnApplication
+      parameters:
+      - name: application_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Application with learner designed curriculum (subjects tab)
+          headers:
+            Status:
+              schema:
+                type: string
+            Transfer-Encoding:
+              schema:
+                type: string
+            Server:
+              schema:
+                type: string
+            X-Request-Id:
+              schema:
+                type: string
+            X-Runtime:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            X-Frame-Options:
+              schema:
+                type: string
+            Cache-Control:
+              schema:
+                type: string
+            ETag:
+              schema:
+                type: string
+            Content-Encoding:
+              schema:
+                type: string
+            Set-Cookie:
+              schema:
+                type: string
+            FF-Revision:
+              schema:
+                type: string
+            FF-Frontend-Revision:
+              schema:
+                type: string
+            FF-Frontend-CDN:
+              schema:
+                type: string
+            X-Powered-By:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  associated_context_ids:
+                    type: array
+                    example:
+                    - 6214f0523b5d006fcc000241
+                    items:
+                      type: string
+                      example: 6214f0523b5d006fcc000241
+                  completion:
+                    type: number
+                    example: 78.0
+                  context_id:
+                    type: string
+                    example: 5fd37fef976a77675b000002
+                  context_name:
+                    type: string
+                    example: The Business School
+                  context_type:
+                    type: string
+                    example: Institutions::Institution
+                  created_at:
+                    type: number
+                    example: 1687193719
+                  id:
+                    type: string
+                    example: 649088773b5d00057b0001d2
+                  last_updated_at:
+                    type: number
+                    example: 1687528253
+                  name_with_context:
+                    type: string
+                    example: The Business School - Executive Education registration
+                      form
+                  payment:
+                    type: object
+                    properties:
+                      amount:
+                        type: number
+                        example: 10000.0
+                      currency:
+                        type: string
+                        example: GBP
+                      discounts:
+                        type: array
+                        example: []
+                        items:
+                          type: object
+                      paid_at:
+                        type: object
+                        nullable: true
+                        example: "null"
+                      paid_by:
+                        type: object
+                        nullable: true
+                        example: "null"
+                      restarted_at:
+                        type: object
+                        nullable: true
+                        example: "null"
+                      restarted_by:
+                        type: object
+                        nullable: true
+                        example: "null"
+                      state:
+                        type: string
+                        example: not_paid
+                      subtotal:
+                        type: number
+                        example: 10000.0
+                      total:
+                        type: number
+                        example: 10000.0
+                      total_discount:
+                        type: number
+                        example: 0.0
+                      transaction:
+                        type: object
+                        nullable: true
+                        example: "null"
+                      waived_at:
+                        type: object
+                        nullable: true
+                        example: "null"
+                      waived_by:
+                        type: object
+                        nullable: true
+                        example: "null"
+                  primary_choice_contexts:
+                    type: array
+                    example:
+                    - children:
+                      - campus_id: null
+                        context_id: 633d9b973b5d003e7d000370
+                        context_type: Institutions::Course
+                      - campus_id: null
+                        context_id: 633d9bc66ab7285af300024c
+                        context_type: Institutions::Course
+                      context_id: 6214f0523b5d006fcc000241
+                      context_long_name: Life coaching certificate January 2023
+                      context_name: January 2023
+                      context_parent_id: 6214f03c3b5d00632600032c
+                      context_parent_name: Life coaching certificate
+                      context_type: Institutions::ClassOf
+                    items:
+                      type: object
+                      properties:
+                        children:
+                          type: array
+                          example:
+                          - campus_id: null
+                            context_id: 633d9b973b5d003e7d000370
+                            context_type: Institutions::Course
+                          - campus_id: null
+                            context_id: 633d9bc66ab7285af300024c
+                            context_type: Institutions::Course
+                          items:
+                            type: object
+                            properties:
+                              campus_id:
+                                type: object
+                                nullable: true
+                                example: "null"
+                              context_id:
+                                type: string
+                                example: 633d9b973b5d003e7d000370
+                              context_type:
+                                type: string
+                                example: Institutions::Course
+                        context_id:
+                          type: string
+                          example: 6214f0523b5d006fcc000241
+                        context_long_name:
+                          type: string
+                          example: Life coaching certificate January 2023
+                        context_name:
+                          type: string
+                          example: January 2023
+                        context_parent_id:
+                          type: string
+                          example: 6214f03c3b5d00632600032c
+                        context_parent_name:
+                          type: string
+                          example: Life coaching certificate
+                        context_type:
+                          type: string
+                          example: Institutions::ClassOf
+                  profile_id:
+                    type: string
+                    example: 5fd38066976a77675b002446
+                  reference_requests:
+                    type: array
+                    example: []
+                    items:
+                      type: object
+                  references:
+                    type: object
+                    properties:
+                      required:
+                        type: number
+                        example: 0.0
+                      submitted:
+                        type: number
+                        example: 0.0
+                  secondary_choice_contexts:
+                    type: array
+                    example: []
+                    items:
+                      type: object
+                  started_at:
+                    type: number
+                    example: 1687193719
+                  started_by_id:
+                    type: string
+                    example: 5fd38066976a77675b002446
+                  state:
+                    type: string
+                    example: started
+                  submitted_at:
+                    type: object
+                    nullable: true
+                    example: "null"
+                  submitted_by_id:
+                    type: object
+                    nullable: true
+                    example: "null"
+                  tabs:
+                    type: array
+                    example:
+                    - __address: {}
+                      __cv: null
+                      __dob: null
+                      __gender: null
+                      __industry_job: null
+                      __languages: []
+                      __nationality: null
+                      __phone: null
+                      __secondary_email: null
+                      __upload_cv: null
+                      __upload_photo: null
+                      __upload_something: null
+                      email: abe.krajcik@bernierjohnson.name
+                      first_name: Abe
+                      id: 649088773b5d00057b0001d3
+                      last_name: Krajcik
+                      middle_name: null
+                      name: personal
+                    - __programme_choice:
+                      - context_id: 6214f0523b5d006fcc000241
+                        context_long_name: Life coaching certificate January 2023
+                        context_name: January 2023
+                        context_parent_id: 6214f03c3b5d00632600032c
+                        context_parent_name: Life coaching certificate
+                        context_type: Institutions::ClassOf
+                      id: 649088773b5d00057b0001d4
+                      name: application
+                    - id: 649088773b5d00057b0001d5
+                      name: __payment__
+                    items:
+                      type: object
+                      properties:
+                        __address:
+                          type: object
+                          properties: {}
+                        __cv:
+                          type: object
+                          nullable: true
+                          example: "null"
+                        __dob:
+                          type: object
+                          nullable: true
+                          example: "null"
+                        __gender:
+                          type: object
+                          nullable: true
+                          example: "null"
+                        __industry_job:
+                          type: object
+                          nullable: true
+                          example: "null"
+                        __languages:
+                          type: array
+                          example: []
+                          items:
+                            type: object
+                        __nationality:
+                          type: object
+                          nullable: true
+                          example: "null"
+                        __phone:
+                          type: object
+                          nullable: true
+                          example: "null"
+                        __programme_choice:
+                          type: array
+                          example:
+                          - context_id: 6214f0523b5d006fcc000241
+                            context_long_name: Life coaching certificate January 2023
+                            context_name: January 2023
+                            context_parent_id: 6214f03c3b5d00632600032c
+                            context_parent_name: Life coaching certificate
+                            context_type: Institutions::ClassOf
+                          items:
+                            type: object
+                            properties:
+                              context_id:
+                                type: string
+                                example: 6214f0523b5d006fcc000241
+                              context_long_name:
+                                type: string
+                                example: Life coaching certificate January 2023
+                              context_name:
+                                type: string
+                                example: January 2023
+                              context_parent_id:
+                                type: string
+                                example: 6214f03c3b5d00632600032c
+                              context_parent_name:
+                                type: string
+                                example: Life coaching certificate
+                              context_type:
+                                type: string
+                                example: Institutions::ClassOf
+                        __secondary_email:
+                          type: object
+                          nullable: true
+                          example: "null"
+                        __upload_cv:
+                          type: object
+                          nullable: true
+                          example: "null"
+                        __upload_photo:
+                          type: object
+                          nullable: true
+                          example: "null"
+                        __upload_something:
+                          type: object
+                          nullable: true
+                          example: "null"
+                        email:
+                          type: string
+                          example: abe.krajcik@bernierjohnson.name
+                        first_name:
+                          type: string
+                          example: Abe
+                        id:
+                          type: string
+                          example: 649088773b5d00057b0001d3
+                        last_name:
+                          type: string
+                          example: Krajcik
+                        middle_name:
+                          type: object
+                          nullable: true
+                          example: "null"
+                        name:
+                          type: string
+                          example: personal
+                  template_id:
+                    type: string
+                    example: 609167c99a52af5d7e000290
+                  updated_at:
+                    type: number
+                    example: 1687528253
+                  url:
+                    type: string
+                    example: /applications/649088773b5d00057b0001d2.zip
+    delete:
+      tags:
+      - Origin (Admissions)
+      - Applications
+      summary: Delete an application
+      description: Delete an application
+      operationId: deleteAnApplication
+      parameters:
+      - name: application_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                applic_id:
+                  type: string
+                  example: 55df3556cc23c48aa70001d8
+                message_type:
+                  type: string
+                  example: applics.submissions
+                state:
+                  type: string
+                  example: submitted
+                tenant:
+                  type: string
+                  example: tbs
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-codegen-request-body-name: body
+  /apis/applics/applics/{application_id}/fees/pay:
+    post:
+      tags:
+      - Origin (Admissions)
+      - Applications
+      summary: Set an application's fee state as paid
+      description: "This request allows you to update the state of a profile's application's\
+        \ fee status to not paid. Please note that this request does not create a\
+        \ transaction for the application fee, it simply updates the status."
+      operationId: setAnApplicationSFeeStateAsPaid
+      parameters:
+      - name: application_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Set an application's fee state as paid
+          headers:
+            Status:
+              schema:
+                type: string
+            Transfer-Encoding:
+              schema:
+                type: string
+            Server:
+              schema:
+                type: string
+            X-Request-Id:
+              schema:
+                type: string
+            X-Runtime:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            X-Frame-Options:
+              schema:
+                type: string
+            Cache-Control:
+              schema:
+                type: string
+            ETag:
+              schema:
+                type: string
+            Content-Encoding:
+              schema:
+                type: string
+            Set-Cookie:
+              schema:
+                type: string
+            FF-Revision:
+              schema:
+                type: string
+            FF-Frontend-Revision:
+              schema:
+                type: string
+            FF-Frontend-CDN:
+              schema:
+                type: string
+            X-Powered-By:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  amount:
+                    type: number
+                    example: 18000.0
+                  currency:
+                    type: string
+                    example: GBP
+                  discounts:
+                    type: array
+                    example:
+                    - amount: 2000
+                      code: test
+                      error: {}
+                      id: 634690f46ab72824f8000231
+                      invalid: false
+                      name: test
+                    items:
+                      type: object
+                      properties:
+                        amount:
+                          type: number
+                          example: 2000.0
+                        code:
+                          type: string
+                          example: test
+                        error:
+                          type: object
+                          properties: {}
+                        id:
+                          type: string
+                          example: 634690f46ab72824f8000231
+                        invalid:
+                          type: boolean
+                          example: false
+                        name:
+                          type: string
+                          example: test
+                  paid_at:
+                    type: number
+                    example: 1693923865
+                  paid_by:
+                    type: string
+                    example: 5fd37ffb976a77675b00061f
+                  restarted_at:
+                    type: number
+                    example: 1693911034
+                  restarted_by:
+                    type: string
+                    example: 5fd37ffb976a77675b00061f
+                  state:
+                    type: string
+                    example: paid
+                  subtotal:
+                    type: number
+                    example: 20000.0
+                  total:
+                    type: number
+                    example: 18000.0
+                  total_discount:
+                    type: number
+                    example: 2000.0
+                  transaction:
+                    type: object
+                    nullable: true
+                    example: "null"
+                  waived_at:
+                    type: object
+                    nullable: true
+                    example: "null"
+                  waived_by:
+                    type: object
+                    nullable: true
+                    example: "null"
+  /apis/applics/applics/{application_id}/fees/unpay:
+    post:
+      tags:
+      - Origin (Admissions)
+      - Applications
+      summary: Set an application's fee state as not paid
+      description: This request allows you to update the state of a profile's application's
+        fee status to not paid.
+      operationId: setAnApplicationSFeeStateAsNotPaid
+      parameters:
+      - name: application_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Set an application's fee state as not paid
+          headers:
+            Status:
+              schema:
+                type: string
+            Transfer-Encoding:
+              schema:
+                type: string
+            Server:
+              schema:
+                type: string
+            X-Request-Id:
+              schema:
+                type: string
+            X-Runtime:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            X-Frame-Options:
+              schema:
+                type: string
+            Cache-Control:
+              schema:
+                type: string
+            ETag:
+              schema:
+                type: string
+            Content-Encoding:
+              schema:
+                type: string
+            Set-Cookie:
+              schema:
+                type: string
+            FF-Revision:
+              schema:
+                type: string
+            FF-Frontend-Revision:
+              schema:
+                type: string
+            FF-Frontend-CDN:
+              schema:
+                type: string
+            X-Powered-By:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  amount:
+                    type: number
+                    example: 18000.0
+                  currency:
+                    type: string
+                    example: GBP
+                  discounts:
+                    type: array
+                    example:
+                    - amount: 2000
+                      code: test
+                      error: {}
+                      id: 634690f46ab72824f8000231
+                      invalid: false
+                      name: test
+                    items:
+                      type: object
+                      properties:
+                        amount:
+                          type: number
+                          example: 2000.0
+                        code:
+                          type: string
+                          example: test
+                        error:
+                          type: object
+                          properties: {}
+                        id:
+                          type: string
+                          example: 634690f46ab72824f8000231
+                        invalid:
+                          type: boolean
+                          example: false
+                        name:
+                          type: string
+                          example: test
+                  paid_at:
+                    type: object
+                    nullable: true
+                    example: "null"
+                  paid_by:
+                    type: object
+                    nullable: true
+                    example: "null"
+                  restarted_at:
+                    type: number
+                    example: 1693923916
+                  restarted_by:
+                    type: string
+                    example: 5fd37ffb976a77675b00061f
+                  state:
+                    type: string
+                    example: not_paid
+                  subtotal:
+                    type: number
+                    example: 20000.0
+                  total:
+                    type: number
+                    example: 18000.0
+                  total_discount:
+                    type: number
+                    example: 2000.0
+                  transaction:
+                    type: object
+                    nullable: true
+                    example: "null"
+                  waived_at:
+                    type: object
+                    nullable: true
+                    example: "null"
+                  waived_by:
+                    type: object
+                    nullable: true
+                    example: "null"
+  /apis/applics/applics/{application_id}/fees/waive:
+    post:
+      tags:
+      - Origin (Admissions)
+      - Applications
+      summary: Set an application's fee state as waived
+      description: "This request allows you to update the state of a profile's application's\
+        \ fee status to waived. The waived state indicates that the applicant is not\
+        \ required to pay the application fee, and allows applicants to submit their\
+        \ application without paying the fee."
+      operationId: setAnApplicationSFeeStateAsWaived
+      parameters:
+      - name: application_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Set an application's fee state as waived
+          headers:
+            Status:
+              schema:
+                type: string
+            Transfer-Encoding:
+              schema:
+                type: string
+            Server:
+              schema:
+                type: string
+            X-Request-Id:
+              schema:
+                type: string
+            X-Runtime:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            X-Frame-Options:
+              schema:
+                type: string
+            Cache-Control:
+              schema:
+                type: string
+            ETag:
+              schema:
+                type: string
+            Content-Encoding:
+              schema:
+                type: string
+            Set-Cookie:
+              schema:
+                type: string
+            FF-Revision:
+              schema:
+                type: string
+            FF-Frontend-Revision:
+              schema:
+                type: string
+            FF-Frontend-CDN:
+              schema:
+                type: string
+            X-Powered-By:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  amount:
+                    type: number
+                    example: 18000.0
+                  currency:
+                    type: string
+                    example: GBP
+                  discounts:
+                    type: array
+                    example:
+                    - amount: 2000
+                      code: test
+                      error: {}
+                      id: 634690f46ab72824f8000231
+                      invalid: false
+                      name: test
+                    items:
+                      type: object
+                      properties:
+                        amount:
+                          type: number
+                          example: 2000.0
+                        code:
+                          type: string
+                          example: test
+                        error:
+                          type: object
+                          properties: {}
+                        id:
+                          type: string
+                          example: 634690f46ab72824f8000231
+                        invalid:
+                          type: boolean
+                          example: false
+                        name:
+                          type: string
+                          example: test
+                  paid_at:
+                    type: number
+                    example: 1693923865
+                  paid_by:
+                    type: string
+                    example: 5fd37ffb976a77675b00061f
+                  restarted_at:
+                    type: number
+                    example: 1693911034
+                  restarted_by:
+                    type: string
+                    example: 5fd37ffb976a77675b00061f
+                  state:
+                    type: string
+                    example: waived
+                  subtotal:
+                    type: number
+                    example: 20000.0
+                  total:
+                    type: number
+                    example: 18000.0
+                  total_discount:
+                    type: number
+                    example: 2000.0
+                  transaction:
+                    type: object
+                    nullable: true
+                    example: "null"
+                  waived_at:
+                    type: number
+                    example: 1693923905
+                  waived_by:
+                    type: string
+                    example: 5fd37ffb976a77675b00061f
+  /apis/applics/profiles/{profile_id}/applics:
+    get:
+      tags:
+      - Origin (Admissions)
+      - Applications
+      summary: Get applications for a specific profile
+      description: Returns all of the applications for a specific candidate profile.
+      operationId: getApplicationsForASpecificProfile
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ""
+          content: {}
+  /apis/courses/courses:
+    get:
+      tags:
+      - Core (Student Information System)
+      - Courses
+      summary: Get courses
+      description: Get courses
+      operationId: getCourses
+      parameters:
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Get courses
+          headers:
+            Status:
+              schema:
+                type: string
+            Transfer-Encoding:
+              schema:
+                type: string
+            Server:
+              schema:
+                type: string
+            X-Request-Id:
+              schema:
+                type: string
+            X-Runtime:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            X-Frame-Options:
+              schema:
+                type: string
+            Cache-Control:
+              schema:
+                type: string
+            ETag:
+              schema:
+                type: string
+            Content-Encoding:
+              schema:
+                type: string
+            Set-Cookie:
+              schema:
+                type: string
+            FF-Revision:
+              schema:
+                type: string
+            FF-Frontend-Revision:
+              schema:
+                type: string
+            FF-Frontend-CDN:
+              schema:
+                type: string
+            X-Powered-By:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                - code: MBA001
+                  id: 5fd37ffd976a77675b00068d
+                  name: Marketing Management
+                - code: MBA003
+                  id: 5fd37ffd976a77675b00068f
+                  name: Economics for SMEs
+                - code: MBA004
+                  id: 5fd37ffd976a77675b000690
+                  name: Business Ethics
+                - code: MBA005
+                  id: 5fd37ffd976a77675b000691
+                  name: Business Law
+                - code: MBA006
+                  id: 5fd37ffd976a77675b000692
+                  name: Business Sustainability
+                - code: MBA007
+                  id: 5fd37ffd976a77675b000693
+                  name: Entrepreneurship
+                - code: MBA008
+                  id: 5fd37ffd976a77675b000694
+                  name: Business Consulting
+                - code: MBA009
+                  id: 5fd37ffd976a77675b000695
+                  name: Global Compliance and Ethical Issues
+                - code: MBA010
+                  id: 5fd37ffd976a77675b000696
+                  name: Managing Technological Innovation and Entrepreneurship
+                - code: MBA011
+                  id: 5fd37ffd976a77675b000697
+                  name: Organizational Processes
+                - code: MBA012
+                  id: 5fd37ffd976a77675b000698
+                  name: Digital Businesses
+                - code: MBA013
+                  id: 5fd37ffd976a77675b000699
+                  name: International Business Management
+                - code: MBA014
+                  id: 5fd37ffd976a77675b00069a
+                  name: Finance
+                - code: MBA015
+                  id: 5fd37ffd976a77675b00069b
+                  name: Financial Accounting
+                - code: MBA016
+                  id: 5fd37ffd976a77675b00069c
+                  name: Financial Innovation
+                - code: MBA017
+                  id: 5fd37ffd976a77675b00069d
+                  name: Financial Investments & Derivatives
+                - code: MBA018
+                  id: 5fd37ffd976a77675b00069e
+                  name: Macroeconomics and Financial Markets
+                - code: MBA019
+                  id: 5fd37ffd976a77675b00069f
+                  name: Management Control Systems
+                - code: KDH022
+                  id: 60539f463b5d00051b00007e
+                  name: Advanced Strategy
+                - code: FD01
+                  id: 609103a26ab728562f000204
+                  name: Final Dissertation
+                - code: S12
+                  id: 609ab3466ab7283af80005ee
+                  name: Startup foundations
+                - code: S42
+                  id: 609ab3689a52af51210004fc
+                  name: Scaling startups
+                - code: no11
+                  id: 60b8a26d9a52af2d600003a7
+                  name: nicks new
+                - code: n223
+                  id: 60b8ab8f6ab7287f2a00036a
+                  name: nick new 2
+                - code: HOTW
+                  id: 60cc5d703b5d002ab700048c
+                  name: History of the World
+                - code: 976A-034
+                  id: 60e738979a52af7994000618
+                  name: Business Law
+                - code: 976A-506
+                  id: 60e738b99a52af7994000695
+                  name: Competition and Strategy
+                - code: 976A-101
+                  id: 60e738cb9a52af1dab0001a0
+                  name: Corporate Finance
+                - code: 976A-268
+                  id: 60e738d89a52af7994000747
+                  name: Economics for Managers
+                - code: 976A-693
+                  id: 60e738ea6ab7281b86000668
+                  name: Global Business Management
+                - code: 976A-076
+                  id: 60e738f86ab7281b860006a3
+                  name: Master Project
+                - code: 9764-59A
+                  id: 60e73b1b6ab72866e40002c4
+                  name: Regression Analysis for Business
+                - code: n01
+                  id: 633338736ab7284e2a000117
+                  name: new subject
+                - code: 976A-375
+                  id: 60e73b2e6ab7285f46000799
+                  name: Marketing Strategy
+                - code: 976A-895
+                  id: 60e73b3a6ab7285f460007d3
+                  name: Data & Decisions
+                - code: 976A-587
+                  id: 60e73b486ab72801c900018a
+                  name: Mergers & Acquisitions
+                - code: 976A-102
+                  id: 60e73c3e3b5d002918000544
+                  name: Advanced Corporate Finance
+                - code: 976A-472
+                  id: 60e73c4e9a52af6a7d000536
+                  name: Introduction to Real Estate
+                - code: 976A-684
+                  id: 60e73c5c6ab7280dc500025d
+                  name: Supply Chain Management
+                - code: 976A-296
+                  id: 60e73c6c9a52af6a7d0005c5
+                  name: Stakeholder & Communication Management
+                - code: OW001
+                  id: 611e531e3b5d003ecc0002fd
+                  name: Orientation Week
+                - code: IM001
+                  id: 611e53326ab72878050002ee
+                  name: Individual meetings
+                - code: d
+                  external_id: ""
+                  id: 61a8f9109a52af68340001b2
+                  name: dd
+                - code: test
+                  external_id: ""
+                  id: 6220c6d43b5d0040fa00020b
+                  name: test
+                - code: BC101
+                  external_id: BAAA
+                  id: 626a23993b5d003298000020
+                  name: Blockchain
+                  theme:
+                    external_id: "135"
+                    id: 614d9b0a3b5d005eac000139
+                    name: Finance
+                - code: SJS101
+                  external_id: Slow it bby
+                  id: 626a23c79a52af4e19000145
+                  name: Slow Jam Studies
+                  theme:
+                    external_id: "257"
+                    id: 614d9b2b6ab7285d4c0000f3
+                    name: Economics
+                - code: FT101
+                  external_id: funky1
+                  id: 626a23e13b5d001087000129
+                  name: Funktown
+                  theme:
+                    external_id: "135"
+                    id: 614d9b0a3b5d005eac000139
+                    name: Finance
+                - code: XXXX
+                  external_id: ""
+                  id: 627388593b5d0045aa000074
+                  name: Calculus
+                - code: wrgwrg
+                  external_id: ""
+                  id: 62c2c8f69a52af08540001a6
+                  name: test
+                - code: nh
+                  external_id: ""
+                  id: 62cd73943b5d007f6b00042b
+                  name: New nick subject
+                - code: MBA002
+                  id: 5fd37ffd976a77675b00068e
+                  name: Digital Advertising Strategy
+                - code: LC01
+                  id: 633d9b973b5d003e7d00036f
+                  name: Life coaching basics
+                - code: LC02
+                  id: 633d9bc66ab7285af300024b
+                  name: Life coaching fundamentals
+                - code: LC03
+                  id: 633d9bf56ab7285af3000403
+                  name: Advanced life coaching
+                - code: LE01
+                  id: 636d29413b5d003f4d000286
+                  name: Life Coaching Expert
+                - code: FP1
+                  external_id: ""
+                  id: 636e14313b5d000d10000654
+                  name: Financial Planning Environment Fundamentals
+                - code: IT1
+                  external_id: ""
+                  id: 636e143f3b5d0010bf0001f6
+                  name: Introduction to Tax in Financial Planning
+                - code: BA1
+                  external_id: ""
+                  id: 636e144b3b5d0010bf000253
+                  name: Business Assurance Fundamentals
+                - code: RF1
+                  external_id: ""
+                  id: 636e14593b5d0019e7000019
+                  name: Retirement Funds Fundamentals
+                - code: HB1
+                  external_id: ""
+                  id: 636e14633b5d0010bf0002d2
+                  name: Healthcare Benefits Fundamentals
+                - code: RP1
+                  external_id: ""
+                  id: 636e146e3b5d0013f20000e4
+                  name: Risk Planning Fundamentals
+                - code: IR1
+                  external_id: ""
+                  id: 636e147c3b5d0010bf00030f
+                  name: Investment and Retirement Planning Fundamentals
+                - code: TEST1GM020
+                  external_id: ""
+                  id: 63a30e6e9a52af5e1f0002ea
+                  name: Geometry
+                  theme:
+                    external_id: "135"
+                    id: 614d9b0a3b5d005eac000139
+                    name: Finance
+                - code: TEST2ABC020
+                  external_id: TEST2ABC020
+                  id: 63a9c0d49a52af11d700055b
+                  name: Mathematics
+                  theme:
+                    external_id: "135"
+                    id: 614d9b0a3b5d005eac000139
+                    name: Finance
+                - code: TEST3PH301
+                  external_id: TEST3PH301
+                  id: 63a9c1049a52af18d900013c
+                  name: Philosophy
+                  theme:
+                    external_id: "123"
+                    id: 614d9b346ab72853650001e9
+                    name: Management
+                - code: TEST3MAN402
+                  external_id: TEST3MAN402
+                  id: 63a9c1289a52af15440003e6
+                  name: Management I
+                  theme:
+                    external_id: "123"
+                    id: 614d9b346ab72853650001e9
+                    name: Management
+                - code: TEST4FIN501
+                  external_id: TEST4FIN501
+                  id: 63a9c1439a52af1544000462
+                  name: Finance II
+                  theme:
+                    external_id: "135"
+                    id: 614d9b0a3b5d005eac000139
+                    name: Finance
+                - code: CIS234
+                  external_id: ""
+                  id: 63adb6e69a52af72c5000163
+                  name: Company Internationalisation Strategies
+                  theme:
+                    external_id: "123"
+                    id: 614d9b346ab72853650001e9
+                    name: Management
+                - code: LSCM254
+                  external_id: ""
+                  id: 63adb7059a52af72c50001ae
+                  name: Logistics and Supply Chain Management
+                  theme:
+                    external_id: "123"
+                    id: 614d9b346ab72853650001e9
+                    name: Management
+                - code: QM653
+                  external_id: ""
+                  id: 63adb7179a52af72c50001ba
+                  name: Quality Management
+                  theme:
+                    external_id: "123"
+                    id: 614d9b346ab72853650001e9
+                    name: Management
+                items:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      example: MBA001
+                    external_id:
+                      type: string
+                      nullable: true
+                      example: "null"
+                    id:
+                      type: string
+                      example: 5fd37ffd976a77675b00068d
+                    name:
+                      type: string
+                      example: Marketing Management
+                    theme:
+                      type: object
+                      properties: {}
+                      nullable: true
+                      example: null
+    post:
+      tags:
+      - Core (Student Information System)
+      - Courses
+      summary: Create a course
+      description: Create a course
+      operationId: createACourse
+      parameters:
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                course[code]:
+                  type: string
+                course[external_id]:
+                  type: string
+                course[name]:
+                  type: string
+                course[theme_id]:
+                  type: string
+      responses:
+        "200":
+          description: ""
+          content: {}
+  /apis/courses/courses/{course_id}:
+    get:
+      tags:
+      - Core (Student Information System)
+      - Courses
+      summary: Get course
+      description: Get course
+      operationId: getCourse
+      parameters:
+      - name: course_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Get course
+          headers:
+            Status:
+              schema:
+                type: string
+            Transfer-Encoding:
+              schema:
+                type: string
+            Server:
+              schema:
+                type: string
+            X-Request-Id:
+              schema:
+                type: string
+            X-Runtime:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            X-Frame-Options:
+              schema:
+                type: string
+            Cache-Control:
+              schema:
+                type: string
+            ETag:
+              schema:
+                type: string
+            Content-Encoding:
+              schema:
+                type: string
+            Set-Cookie:
+              schema:
+                type: string
+            FF-Revision:
+              schema:
+                type: string
+            FF-Frontend-Revision:
+              schema:
+                type: string
+            FF-Frontend-CDN:
+              schema:
+                type: string
+            X-Powered-By:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: MBA001
+                  external_id:
+                    type: object
+                    nullable: true
+                    example: "null"
+                  id:
+                    type: string
+                    example: 5fd37ffd976a77675b00068d
+                  name:
+                    type: string
+                    example: Marketing Management
+                  theme:
+                    type: object
+                    nullable: true
+                    example: "null"
+    put:
+      tags:
+      - Core (Student Information System)
+      - Courses
+      summary: Update a course
+      description: Update a course
+      operationId: updateACourse
+      parameters:
+      - name: course_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                course[name]:
+                  type: string
+      responses:
+        "200":
+          description: ""
+          content: {}
+    delete:
+      tags:
+      - Core (Student Information System)
+      - Courses
+      summary: Delete a course
+      description: Delete a course
+      operationId: deleteACourse
+      parameters:
+      - name: course_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ""
+          content: {}
+  /apis/evaluations/applics/{application_id}/evaluations:
+    get:
+      tags:
+      - Origin (Admissions)
+      - Evaluations
+      summary: Get evaluations for a specific profile's application
+      description: Get evaluations for a specific profile's application
+      operationId: getEvaluationsForASpecificProfileSApplication
+      parameters:
+      - name: application_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ""
+          content: {}
+  /apis/evaluations/evaluations/{evaluation_id}:
+    get:
+      tags:
+      - Origin (Admissions)
+      - Evaluations
+      summary: Get an evaluation
+      description: Get an evaluation
+      operationId: getAnEvaluation
+      parameters:
+      - name: evaluation_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ""
+          content: {}
+  /apis/evaluations/templates/{evaluation_template_id}/evaluations:
+    get:
+      tags:
+      - Origin (Admissions)
+      - Evaluations
+      summary: Get evaluations for a specific evaluation template
+      description: Get evaluations for a specific evaluation template
+      operationId: getEvaluationsForASpecificEvaluationTemplate
+      parameters:
+      - name: evaluation_template_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ""
+          content: {}
+  /apis/lecturers/lecturers:
+    get:
+      tags:
+      - Core (Student Information System)
+      - Lecturers
+      summary: Get lecturers
+      description: Get lecturers
+      operationId: getLecturers
+      parameters:
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ""
+          content: {}
+  /apis/lecturers/lecturers/{profile_id}:
+    get:
+      tags:
+      - Core (Student Information System)
+      - Lecturers
+      summary: Get lecturer
+      description: Get lecturer
+      operationId: getLecturer
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ""
+          content: {}
+  /apis/profiles/profiles/62723b483b5d0018780003a4/roles/62723b483b5d0018780003a9/transcript/5fd37ffd976a77675b0006c4/register:
+    post:
+      tags:
+      - Core (Student Information System)
+      - Transcripts
+      summary: (DEPRECATED) Register a profile to a course on their transcript
+      description: |-
+        #### DEPRECATED
+
+        This request has been replaced by the "POST Add and/or register a profile to multiple courses on their transcript".
+      operationId: deprecatedRegisterAProfileToACourseOnTheirTranscript
+      parameters:
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ""
+          content: {}
+  /apis/profiles/profiles/{profile_id}/roles/{role_id}/transcript:
+    post:
+      tags:
+      - Core (Student Information System)
+      - Transcripts
+      summary: Create a transcript for a profile's role for a class
+      description: |-
+        Creates a transcript for a particular profile's role for a class. Please note that this request does not currently work for a profile's role for a course.
+
+        This request creates a transcript which contains all of the courses on the class study plan, and they are unregistered.
+      operationId: createATranscriptForAProfileSRoleForAClass
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: role_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ""
+          content: {}
+  /apis/profiles/profiles/{profile_id}/roles/{role_id}/transcript/courses/register:
+    post:
+      tags:
+      - Core (Student Information System)
+      - Transcripts
+      summary: Add and register a profile to courses on their transcript
+      description: |-
+        This request adds and registers profiles to courses on their transcript.
+
+        The request body can contain a mixture of both courses which are not on the transcript, and courses on the transcript which are unregistered.
+
+        If the course is not present on the transcript, then the course will be added to the transcript.
+
+        If the course is present on the transcript but the profile has not been registered to the course, then they will be registered to the course.
+
+        If a course id is invalid then the request will fail at the point at which the invalid course id is reached. So for example if the third course id is invalid and the first two course ids are valid then the first two courses will be added and registered successfully.
+      operationId: addAndRegisterAProfileToCoursesOnTheirTranscript
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: role_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                course_ids:
+                  type: array
+                  example:
+                  - 6372b649a811e112d70007e4
+                  items:
+                    type: string
+                    example: 6372b649a811e112d70007e4
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-codegen-request-body-name: body
+  /apis/profiles/profiles/{profile_id}/roles/{role_id}/transcript/courses/unregister:
+    post:
+      tags:
+      - Core (Student Information System)
+      - Transcripts
+      summary: Unregister a profile from multiple courses on their transcript
+      description: Unregisters registered courses on the transcript.
+      operationId: unregisterAProfileFromMultipleCoursesOnTheirTranscript
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: role_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                course_ids:
+                  type: array
+                  example:
+                  - 5dad9464fcf4c78eb8000019
+                  - 5d88a0f0fcf4c7d25900068d
+                  items:
+                    type: string
+                    example: 5dad9464fcf4c78eb8000019
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-codegen-request-body-name: body
+  /apis/profiles/profiles/{profile_id}/roles/{role_id}/transcript/{transcript_id}/unregister:
+    post:
+      tags:
+      - Core (Student Information System)
+      - Transcripts
+      summary: (DEPRECATED) Unregister a profile from a course on their transcript
+      description: (DEPRECATED) Unregister a profile from a course on their transcript
+      operationId: deprecatedUnregisterAProfileFromACourseOnTheirTranscript
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: role_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: transcript_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ""
+          content: {}
+  /apis/registrations/profiles/{profile_id}/registrations:
+    post:
+      tags:
+      - Core (Student Information System)
+      - Student registrations and grades for a unit
+      summary: Create registrations and grades for a single student for multiple units
+      description: |-
+        This request registers the profile on one or more units on their transcript.
+
+        The request body can contain one or more units and can include grade and state data. It can contain a mixture of both units which are not on the transcript, and units on the transcript which are unregistered.
+
+        If the unit is not present on the transcript, then the unit will be added to the transcript.
+
+        If the unit is present on the transcript but the profile has not been registered to the unit, then they will be registered to the unit.
+      operationId: createRegistrationsAndGradesForASingleStudentForMultipleUnits
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+              format: binary
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-codegen-request-body-name: body
+    patch:
+      tags:
+      - Core (Student Information System)
+      - Student registrations and grades for a unit
+      summary: Update registrations and grades for a single student for multiple units
+      description: |-
+        This request updates one or more registrations for a specific profile.
+
+        The request body can contain one or more units and can include grade and state data.
+      operationId: updateRegistrationsAndGradesForASingleStudentForMultipleUnits
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+              format: binary
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-codegen-request-body-name: body
+  /apis/registrations/units/{unit_id}/registrations:
+    get:
+      tags:
+      - Core (Student Information System)
+      - Student registrations and grades for a unit
+      summary: Get student registrations and grades for a unit
+      description: |-
+        This request gets all of the students registered to a unit and their grades for the unit.
+
+        The response includes the following information:
+
+        - The award status of the grade
+        - The published status of the grade
+        - The partial grades names and values
+        - The final grade value
+        - The time the grade was created and updated
+      operationId: getStudentRegistrationsAndGradesForAUnit
+      parameters:
+      - name: unit_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: GET student registrations and grades for a unit
+          headers:
+            Status:
+              schema:
+                type: string
+            Transfer-Encoding:
+              schema:
+                type: string
+            Server:
+              schema:
+                type: string
+            X-Request-Id:
+              schema:
+                type: string
+            X-Runtime:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            X-Frame-Options:
+              schema:
+                type: string
+            Cache-Control:
+              schema:
+                type: string
+            ETag:
+              schema:
+                type: string
+            X-FULLFABRIC-JSON:
+              schema:
+                type: string
+            Content-Encoding:
+              schema:
+                type: string
+            Set-Cookie:
+              schema:
+                type: string
+            FF-Revision:
+              schema:
+                type: string
+            FF-Frontend-Revision:
+              schema:
+                type: string
+            FF-Frontend-CDN:
+              schema:
+                type: string
+            X-Powered-By:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                - awarded: false
+                  course_id: 60c8a2169a52af548c00011a
+                  created_at: 1629376402
+                  grades:
+                  - id: 6079567b6ab7282045000254
+                    label: Coursework
+                    name: __coursework
+                    published: false
+                    value: "50"
+                  - id: 607956819a52af5316000174
+                    label: Exam
+                    name: __exam
+                    published: false
+                  - id: 607956206ab72874410003a0
+                    label: Final grade
+                    name: final
+                    published: false
+                  id: 611e4f926ab72817e80000d9
+                  profile_id: 5fd38000976a77675b00087a
+                  published: false
+                  state_name: unknown
+                  unit_id: 607956206ab728744100039e
+                  updated_at: 1654602863
+                - awarded: true
+                  course_id: 610cf8d09a52af1ba6000529
+                  created_at: 1628378836
+                  grades:
+                  - id: 6079567b6ab7282045000254
+                    label: Coursework
+                    name: __coursework
+                    published: true
+                    value: "18"
+                  - id: 607956819a52af5316000174
+                    label: Exam
+                    name: __exam
+                    published: true
+                    value: "16.2"
+                  - id: 607956206ab72874410003a0
+                    label: Final grade
+                    name: final
+                    published: true
+                    value: "17"
+                  id: 610f16d46ab7283267000191
+                  profile_id: 5fd3804a976a77675b001bfe
+                  published: true
+                  state_name: pass
+                  unit_id: 607956206ab728744100039e
+                  updated_at: 1628454105
+                - awarded: true
+                  course_id: 629e0b576ab7287445000207
+                  created_at: 1655974491
+                  grades:
+                  - id: 6079567b6ab7282045000254
+                    label: Coursework
+                    name: __coursework
+                    published: false
+                  - id: 607956819a52af5316000174
+                    label: Exam
+                    name: __exam
+                    published: false
+                  - id: 607956206ab72874410003a0
+                    label: Final grade
+                    name: final
+                    published: true
+                    value: "87"
+                  id: 62b42a5b6ab728609a0000d9
+                  profile_id: 5fd3807c976a77675b002a8e
+                  published: true
+                  state_name: pass
+                  unit_id: 607956206ab728744100039e
+                  updated_at: 1655974520
+                items:
+                  type: object
+                  properties:
+                    awarded:
+                      type: boolean
+                      example: false
+                    course_id:
+                      type: string
+                      example: 60c8a2169a52af548c00011a
+                    created_at:
+                      type: number
+                      example: 1629376402
+                    grades:
+                      type: array
+                      example:
+                      - id: 6079567b6ab7282045000254
+                        label: Coursework
+                        name: __coursework
+                        published: false
+                        value: "50"
+                      - id: 607956819a52af5316000174
+                        label: Exam
+                        name: __exam
+                        published: false
+                        value: null
+                      - id: 607956206ab72874410003a0
+                        label: Final grade
+                        name: final
+                        published: false
+                        value: null
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: 6079567b6ab7282045000254
+                          label:
+                            type: string
+                            example: Coursework
+                          name:
+                            type: string
+                            example: __coursework
+                          published:
+                            type: boolean
+                            example: false
+                          value:
+                            type: string
+                            nullable: true
+                            example: "50"
+                    id:
+                      type: string
+                      example: 611e4f926ab72817e80000d9
+                    profile_id:
+                      type: string
+                      example: 5fd38000976a77675b00087a
+                    published:
+                      type: boolean
+                      example: false
+                    state_name:
+                      type: string
+                      example: unknown
+                    unit_id:
+                      type: string
+                      example: 607956206ab728744100039e
+                    updated_at:
+                      type: number
+                      example: 1654602863
+  /apis/sessions/lecturers_costs_and_attendance:
+    get:
+      tags:
+      - Core (Student Information System)
+      - Session lecturer costs
+      summary: Get lecturer costs for each session
+      description: Get lecturer costs for each session
+      operationId: getLecturerCostsForEachSession
+      parameters:
+      - name: limit
+        in: query
+        description: |-
+          A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+
+          default: 10, minimum: 1, maximum: 100
+        schema:
+          type: string
+      - name: skip
+        in: query
+        description: |+
+          A cursor allowing to paginate through results.
+
+          default: 0
+
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ""
+          content: {}
+  /apis/study_plans/classes/{class_id}/study_plan:
+    get:
+      tags:
+      - Core (Student Information System)
+      - Class study plan
+      summary: Get class study plan
+      description: Get class study plan
+      operationId: getClassStudyPlan
+      parameters:
+      - name: class_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ""
+          content: {}
+  /apis/transcripts/profiles/{profile_id}/transcripts:
+    get:
+      tags:
+      - Core (Student Information System)
+      - Transcripts
+      summary: Get profile transcripts by profile
+      description: Gets all of the profile transcripts for a particular class study
+        plan.
+      operationId: getProfileTranscriptsByProfile
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Get profile transcripts by study plan
+          headers:
+            Status:
+              schema:
+                type: string
+            Transfer-Encoding:
+              schema:
+                type: string
+            Server:
+              schema:
+                type: string
+            X-Request-Id:
+              schema:
+                type: string
+            X-Runtime:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            X-Frame-Options:
+              schema:
+                type: string
+            Cache-Control:
+              schema:
+                type: string
+            ETag:
+              schema:
+                type: string
+            X-FULLFABRIC-JSON:
+              schema:
+                type: string
+            Content-Encoding:
+              schema:
+                type: string
+            Set-Cookie:
+              schema:
+                type: string
+            FF-Revision:
+              schema:
+                type: string
+            FF-Frontend-Revision:
+              schema:
+                type: string
+            FF-Frontend-CDN:
+              schema:
+                type: string
+            X-Powered-By:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                - created_at: 1623108380
+                  id: 60beab1c9a52af5e5c0002eb
+                  profile_id: 5fd3804a976a77675b001bfe
+                  study_plan_id: 60095e7b3b5d00593e000208
+                  updated_at: 1636027396
+                - created_at: 1623761430
+                  id: 60c8a2169a52af548c000118
+                  profile_id: 5fd38000976a77675b00087a
+                  study_plan_id: 60095e7b3b5d00593e000208
+                  updated_at: 1653310581
+                items:
+                  type: object
+                  properties:
+                    created_at:
+                      type: number
+                      example: 1623108380
+                    id:
+                      type: string
+                      example: 60beab1c9a52af5e5c0002eb
+                    profile_id:
+                      type: string
+                      example: 5fd3804a976a77675b001bfe
+                    study_plan_id:
+                      type: string
+                      example: 60095e7b3b5d00593e000208
+                    updated_at:
+                      type: number
+                      example: 1636027396
+  /apis/transcripts/study_plans/{study_plan_id}/transcripts:
+    get:
+      tags:
+      - Core (Student Information System)
+      - Transcripts
+      summary: Get profile transcripts by study plan
+      description: Gets all of the profile transcripts for a particular class study
+        plan.
+      operationId: getProfileTranscriptsByStudyPlan
+      parameters:
+      - name: study_plan_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Get profile transcripts by study plan
+          headers:
+            Status:
+              schema:
+                type: string
+            Transfer-Encoding:
+              schema:
+                type: string
+            Server:
+              schema:
+                type: string
+            X-Request-Id:
+              schema:
+                type: string
+            X-Runtime:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            X-Frame-Options:
+              schema:
+                type: string
+            Cache-Control:
+              schema:
+                type: string
+            ETag:
+              schema:
+                type: string
+            X-FULLFABRIC-JSON:
+              schema:
+                type: string
+            Content-Encoding:
+              schema:
+                type: string
+            Set-Cookie:
+              schema:
+                type: string
+            FF-Revision:
+              schema:
+                type: string
+            FF-Frontend-Revision:
+              schema:
+                type: string
+            FF-Frontend-CDN:
+              schema:
+                type: string
+            X-Powered-By:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                - created_at: 1623108380
+                  id: 60beab1c9a52af5e5c0002eb
+                  profile_id: 5fd3804a976a77675b001bfe
+                  study_plan_id: 60095e7b3b5d00593e000208
+                  updated_at: 1636027396
+                - created_at: 1623761430
+                  id: 60c8a2169a52af548c000118
+                  profile_id: 5fd38000976a77675b00087a
+                  study_plan_id: 60095e7b3b5d00593e000208
+                  updated_at: 1653310581
+                items:
+                  type: object
+                  properties:
+                    created_at:
+                      type: number
+                      example: 1623108380
+                    id:
+                      type: string
+                      example: 60beab1c9a52af5e5c0002eb
+                    profile_id:
+                      type: string
+                      example: 5fd3804a976a77675b001bfe
+                    study_plan_id:
+                      type: string
+                      example: 60095e7b3b5d00593e000208
+                    updated_at:
+                      type: number
+                      example: 1636027396
+  /apis/transcripts/transcripts/{transcript_id}:
+    get:
+      tags:
+      - Core (Student Information System)
+      - Transcripts
+      summary: Get a profile's transcript
+      description: "Returns a profile's transcript with all of the credits, grade\
+        \ and other information for all registered and unregistered courses on the\
+        \ transcript."
+      operationId: getAProfileSTranscript
+      parameters:
+      - name: transcript_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Get a profile's transcript
+          headers:
+            Status:
+              schema:
+                type: string
+            Transfer-Encoding:
+              schema:
+                type: string
+            Server:
+              schema:
+                type: string
+            X-Request-Id:
+              schema:
+                type: string
+            X-Runtime:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            X-Frame-Options:
+              schema:
+                type: string
+            Cache-Control:
+              schema:
+                type: string
+            ETag:
+              schema:
+                type: string
+            Content-Encoding:
+              schema:
+                type: string
+            Set-Cookie:
+              schema:
+                type: string
+            FF-Revision:
+              schema:
+                type: string
+            FF-Frontend-Revision:
+              schema:
+                type: string
+            FF-Frontend-CDN:
+              schema:
+                type: string
+            X-Powered-By:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  courses:
+                    type: array
+                    example:
+                    - category_id: 6183cb8e3b5d0052640005e2
+                      counts_towards_curricular_grade: null
+                      counts_towards_total_credits: null
+                      course_id: 5fd37ffd976a77675b00068d
+                      course_type: Core
+                      credits: 2
+                      hours: null
+                      id: 60beab1c9a52af5e5c0002ec
+                      max_number_absences: null
+                    - category_id: 6091088d9a52af3ca6000387
+                      counts_towards_curricular_grade: null
+                      counts_towards_total_credits: null
+                      course_id: 609103a26ab728562f000204
+                      course_type: Core
+                      credits: 15
+                      hours: null
+                      id: 60beab1c9a52af5e5c0002ef
+                      max_number_absences: null
+                    - category_id: 6183cb8e3b5d0052640005e2
+                      counts_towards_curricular_grade: null
+                      counts_towards_total_credits: null
+                      course_id: 5fd37ffd976a77675b000691
+                      course_type: Core
+                      credits: 25
+                      hours: 50
+                      id: 60c8a24d3b5d000b030001bf
+                      max_number_absences: 1
+                    - category_id: 6183cb8e9a52af3b3b0002e7
+                      counts_towards_curricular_grade: null
+                      counts_towards_total_credits: null
+                      course_id: 60cc5d703b5d002ab700048c
+                      course_type: Core
+                      credits: 12
+                      hours: null
+                      id: 60cc5d956ab7286e8b000098
+                      max_number_absences: null
+                    - category_id: null
+                      counts_towards_curricular_grade: null
+                      counts_towards_total_credits: null
+                      course_id: 5fd37ffd976a77675b00068e
+                      course_type: Core
+                      credits: 10
+                      hours: 18
+                      id: 610cf8d09a52af1ba6000529
+                      max_number_absences: null
+                    - category_id: null
+                      counts_towards_curricular_grade: null
+                      counts_towards_total_credits: null
+                      course_id: 5fd37ffd976a77675b000696
+                      course_type: Core
+                      credits: 8
+                      hours: 30
+                      id: 610f052d9a52af0699000209
+                      max_number_absences: 1
+                    - category_id: null
+                      counts_towards_curricular_grade: null
+                      counts_towards_total_credits: null
+                      course_id: 611e531e3b5d003ecc0002fd
+                      course_type: Extra curricular
+                      credits: 0
+                      hours: null
+                      id: 611e5fa73b5d0067fc000408
+                      max_number_absences: null
+                    - category_id: null
+                      counts_towards_curricular_grade: null
+                      counts_towards_total_credits: null
+                      course_id: 611e53326ab72878050002ee
+                      course_type: Extra curricular
+                      credits: 0
+                      hours: null
+                      id: 611e5fcd3b5d0067fc000494
+                      max_number_absences: null
+                    - category_id: null
+                      counts_towards_curricular_grade: null
+                      counts_towards_total_credits: null
+                      course_id: 60e73b486ab72801c900018a
+                      course_type: Elective
+                      credits: 7.5
+                      hours: null
+                      id: 615acf523b5d00332200024d
+                      max_number_absences: null
+                    items:
+                      type: object
+                      properties:
+                        category_id:
+                          type: string
+                          nullable: true
+                          example: 6183cb8e3b5d0052640005e2
+                        counts_towards_curricular_grade:
+                          type: object
+                          nullable: true
+                          example: "null"
+                        counts_towards_total_credits:
+                          type: object
+                          nullable: true
+                          example: "null"
+                        course_id:
+                          type: string
+                          example: 5fd37ffd976a77675b00068d
+                        course_type:
+                          type: string
+                          example: Core
+                        credits:
+                          type: number
+                          example: 2.0
+                        hours:
+                          type: number
+                          nullable: true
+                        id:
+                          type: string
+                          example: 60beab1c9a52af5e5c0002ec
+                        max_number_absences:
+                          type: number
+                          nullable: true
+                  created_at:
+                    type: number
+                    example: 1623108380
+                  id:
+                    type: string
+                    example: 60beab1c9a52af5e5c0002eb
+                  profile_id:
+                    type: string
+                    example: 5fd3804a976a77675b001bfe
+                  registrations:
+                    type: array
+                    example:
+                    - awarded: true
+                      course_id: 60beab1c9a52af5e5c0002ec
+                      created_at: 1628379447
+                      grades:
+                      - id: 61103e2a3b5d0041dd00043d
+                        label: Coursework
+                        name: __coursework
+                        value: "17"
+                      - id: 61103e313b5d001564000041
+                        label: Project 1
+                        name: __project_1
+                        value: "16"
+                      - id: 61103e3a6ab7285a460002d4
+                        label: Project 2
+                        name: __project_2
+                        value: "16"
+                      - id: 61103e419a52af1324000639
+                        label: Exam
+                        name: __exam
+                        value: "18"
+                      - id: 60afc1c83b5d0078e800023c
+                        label: Final grade
+                        name: final
+                        value: "17"
+                      id: 610f19373b5d000f750005f0
+                      profile_id: 5fd3804a976a77675b001bfe
+                      published: true
+                      published_grades:
+                      - __coursework
+                      - __project_1
+                      - __project_2
+                      - __exam
+                      - final
+                      unit_id: 60afc1c83b5d0078e800023a
+                      updated_at: 1628454494
+                    - awarded: null
+                      course_id: 60beab1c9a52af5e5c0002ef
+                      created_at: 1629376608
+                      grades:
+                      - id: 609104c69a52af12720002cc
+                        label: mid-term Assessment
+                        name: __mid_term_assessment
+                        value: null
+                      - id: 609104d89a52af5f9900046a
+                        label: Dissertation
+                        name: __dissertation
+                        value: null
+                      - id: 609104169a52af4d84000320
+                        label: Final grade
+                        name: final
+                        value: null
+                      id: 611e50609a52af016200008d
+                      profile_id: 5fd3804a976a77675b001bfe
+                      published: false
+                      published_grades: []
+                      unit_id: 609104159a52af4d8400031e
+                      updated_at: 1629376608
+                    - awarded: null
+                      course_id: 60c8a24d3b5d000b030001bf
+                      created_at: 1628454592
+                      grades:
+                      - id: 61103ea46ab728426a0005c1
+                        label: Coursework
+                        name: __coursework
+                        value: "16"
+                      - id: 61103eab6ab728426a0005f1
+                        label: Project
+                        name: __project
+                        value: "10"
+                      - id: 61103eb19a52af2613000401
+                        label: Exam
+                        name: __exam
+                        value: "5"
+                      - id: 606f0c023b5d0057020001fb
+                        label: Final grade
+                        name: final
+                        value: "9"
+                      id: 61103ec06ab728426a00060b
+                      profile_id: 5fd3804a976a77675b001bfe
+                      published: true
+                      published_grades:
+                      - __coursework
+                      - __project
+                      - __exam
+                      - final
+                      unit_id: 606f0c023b5d0057020001f9
+                      updated_at: 1628454680
+                    - awarded: true
+                      course_id: 60cc5d956ab7286e8b000098
+                      created_at: 1629376621
+                      grades:
+                      - id: 60cc5e103b5d00471c000384
+                        label: Final grade
+                        name: final
+                        value: "91"
+                      id: 611e506d6ab728566a000528
+                      profile_id: 5fd3804a976a77675b001bfe
+                      published: true
+                      published_grades:
+                      - final
+                      unit_id: 60cc5e103b5d00471c000382
+                      updated_at: 1629376641
+                    - awarded: true
+                      course_id: 610cf8d09a52af1ba6000529
+                      created_at: 1628378836
+                      grades:
+                      - id: 6079567b6ab7282045000254
+                        label: Coursework
+                        name: __coursework
+                        value: "18"
+                      - id: 607956819a52af5316000174
+                        label: Exam
+                        name: __exam
+                        value: "16.2"
+                      - id: 607956206ab72874410003a0
+                        label: Final grade
+                        name: final
+                        value: "17"
+                      id: 610f16d46ab7283267000191
+                      profile_id: 5fd3804a976a77675b001bfe
+                      published: true
+                      published_grades:
+                      - __coursework
+                      - __exam
+                      - final
+                      unit_id: 607956206ab728744100039e
+                      updated_at: 1628454105
+                    - awarded: true
+                      course_id: 610f052d9a52af0699000209
+                      created_at: 1628374449
+                      grades:
+                      - id: 61103d573b5d002e31000529
+                        label: Coursework
+                        name: __coursework
+                        value: "16.5"
+                      - id: 61103d606ab7282e9b0005d8
+                        label: Project
+                        name: __project
+                        value: "18.5"
+                      - id: 61103d693b5d002e3100053e
+                        label: Exam
+                        name: __exam
+                        value: "16"
+                      - id: 60ca5ae46ab7282b1e000509
+                        label: Final grade
+                        name: final
+                        value: "17"
+                      id: 610f05b13b5d00299000030c
+                      profile_id: 5fd3804a976a77675b001bfe
+                      published: true
+                      published_grades:
+                      - __coursework
+                      - __project
+                      - __exam
+                      - final
+                      unit_id: 60ca5ae46ab7282b1e000507
+                      updated_at: 1628454357
+                    items:
+                      type: object
+                      properties:
+                        awarded:
+                          type: boolean
+                          nullable: true
+                          example: true
+                        course_id:
+                          type: string
+                          example: 60beab1c9a52af5e5c0002ec
+                        created_at:
+                          type: number
+                          example: 1628379447
+                        grades:
+                          type: array
+                          example:
+                          - id: 61103e2a3b5d0041dd00043d
+                            label: Coursework
+                            name: __coursework
+                            value: "17"
+                          - id: 61103e313b5d001564000041
+                            label: Project 1
+                            name: __project_1
+                            value: "16"
+                          - id: 61103e3a6ab7285a460002d4
+                            label: Project 2
+                            name: __project_2
+                            value: "16"
+                          - id: 61103e419a52af1324000639
+                            label: Exam
+                            name: __exam
+                            value: "18"
+                          - id: 60afc1c83b5d0078e800023c
+                            label: Final grade
+                            name: final
+                            value: "17"
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                example: 61103e2a3b5d0041dd00043d
+                              label:
+                                type: string
+                                example: Coursework
+                              name:
+                                type: string
+                                example: __coursework
+                              value:
+                                type: string
+                                example: "17"
+                        id:
+                          type: string
+                          example: 610f19373b5d000f750005f0
+                        profile_id:
+                          type: string
+                          example: 5fd3804a976a77675b001bfe
+                        published:
+                          type: boolean
+                          example: true
+                        published_grades:
+                          type: array
+                          example:
+                          - __coursework
+                          - __project_1
+                          - __project_2
+                          - __exam
+                          - final
+                          items:
+                            type: string
+                            example: __coursework
+                        unit_id:
+                          type: string
+                          example: 60afc1c83b5d0078e800023a
+                        updated_at:
+                          type: number
+                          example: 1628454494
+                  study_plan_id:
+                    type: string
+                    example: 60095e7b3b5d00593e000208
+                  updated_at:
+                    type: number
+                    example: 1636027396
+  /apis/units/units:
+    get:
+      tags:
+      - Core (Student Information System)
+      - Units
+      summary: Get units
+      description: Get units
+      operationId: getUnits
+      parameters:
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Get units
+          headers:
+            Status:
+              schema:
+                type: string
+            Transfer-Encoding:
+              schema:
+                type: string
+            Server:
+              schema:
+                type: string
+            X-Request-Id:
+              schema:
+                type: string
+            X-Runtime:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            X-Frame-Options:
+              schema:
+                type: string
+            Cache-Control:
+              schema:
+                type: string
+            ETag:
+              schema:
+                type: string
+            X-FULLFABRIC-JSON:
+              schema:
+                type: string
+            Content-Encoding:
+              schema:
+                type: string
+            Set-Cookie:
+              schema:
+                type: string
+            FF-Revision:
+              schema:
+                type: string
+            FF-Frontend-Revision:
+              schema:
+                type: string
+            FF-Frontend-CDN:
+              schema:
+                type: string
+            X-Powered-By:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                - code: MBA005
+                  course_id: 5fd37ffd976a77675b000691
+                  created_at: 1631704245
+                  custom_name: May 2023
+                  id: 6141d4b53b5d0063d7000427
+                  name: May 2023
+                  price_amount: 2000
+                  price_currency: EUR
+                  updated_at: 1674233623
+                - code: FP1
+                  course_id: 636e14313b5d000d10000654
+                  created_at: 1668160699
+                  custom_name: April 2023
+                  id: 636e1cbb3b5d00439a000087
+                  name: April 2023
+                  updated_at: 1674233623
+                - code: MBA017
+                  course_id: 5fd37ffd976a77675b00069d
+                  created_at: 1607696381
+                  custom_name: June 2023
+                  id: 5fd37ffd976a77675b0006cf
+                  name: June 2023
+                  price_amount: 1500
+                  price_currency: EUR
+                  updated_at: 1674233623
+                items:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      example: MBA005
+                    course_id:
+                      type: string
+                      example: 5fd37ffd976a77675b000691
+                    created_at:
+                      type: number
+                      example: 1631704245
+                    custom_name:
+                      type: string
+                      example: May 2023
+                    external_id:
+                      type: object
+                      nullable: true
+                      example: "null"
+                    id:
+                      type: string
+                      example: 6141d4b53b5d0063d7000427
+                    name:
+                      type: string
+                      example: May 2023
+                    price_amount:
+                      type: number
+                      nullable: true
+                      example: 2000.0
+                    price_currency:
+                      type: string
+                      nullable: true
+                      example: EUR
+                    updated_at:
+                      type: number
+                      example: 1674233623
+    post:
+      tags:
+      - Core (Student Information System)
+      - Units
+      summary: Create unit
+      description: Create unit
+      operationId: createUnit
+      parameters:
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                __product_degree_type:
+                  type: string
+                  example: Bachelors
+                campus_ids:
+                  type: array
+                  example:
+                  - 5ff317ba9a52af08c10009ca
+                  items:
+                    type: string
+                    example: 5ff317ba9a52af08c10009ca
+                course_id:
+                  type: string
+                  example: 5fd37ffd976a77675b00068d
+                custom_name:
+                  type: string
+                  example: My custom unit name 1
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-codegen-request-body-name: body
+  /apis/units/units/{unit_id}:
+    get:
+      tags:
+      - Core (Student Information System)
+      - Units
+      summary: Get unit
+      description: Get unit
+      operationId: getUnit
+      parameters:
+      - name: unit_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Get unit
+          headers:
+            Status:
+              schema:
+                type: string
+            Transfer-Encoding:
+              schema:
+                type: string
+            Server:
+              schema:
+                type: string
+            X-Request-Id:
+              schema:
+                type: string
+            X-Runtime:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            X-Frame-Options:
+              schema:
+                type: string
+            Cache-Control:
+              schema:
+                type: string
+            ETag:
+              schema:
+                type: string
+            Content-Encoding:
+              schema:
+                type: string
+            Set-Cookie:
+              schema:
+                type: string
+            FF-Revision:
+              schema:
+                type: string
+            FF-Frontend-Revision:
+              schema:
+                type: string
+            FF-Frontend-CDN:
+              schema:
+                type: string
+            X-Powered-By:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  __product_degree_type:
+                    type: string
+                    example: Bachelors
+                  campuses:
+                    type: array
+                    example:
+                    - id: 5ff317ba9a52af08c10009ca
+                      name: London
+                    - id: 5ff317c19a52af390c000395
+                      name: Paris
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 5ff317ba9a52af08c10009ca
+                        name:
+                          type: string
+                          example: London
+                  closes_on:
+                    type: number
+                    example: 0.0
+                  code:
+                    type: string
+                    example: MBA005
+                  course_id:
+                    type: string
+                    example: 5fd37ffd976a77675b000691
+                  created_at:
+                    type: number
+                    example: 1631704245
+                  custom_name:
+                    type: string
+                    example: May 2023
+                  ends_on:
+                    type: number
+                    example: 0.0
+                  epilogue:
+                    type: object
+                    nullable: true
+                    example: "null"
+                  external_id:
+                    type: object
+                    nullable: true
+                    example: "null"
+                  guest_lecturer_ids:
+                    type: array
+                    example: []
+                    items:
+                      type: object
+                  id:
+                    type: string
+                    example: 6141d4b53b5d0063d7000427
+                  instance_count:
+                    type: number
+                    example: 2.0
+                  language:
+                    type: string
+                    example: english
+                  lecturer_ids:
+                    type: array
+                    example: []
+                    items:
+                      type: object
+                  maximum_capacity:
+                    type: number
+                    example: 30.0
+                  minimum_capacity:
+                    type: number
+                    example: 10.0
+                  name:
+                    type: string
+                    example: May 2023
+                  opens_on:
+                    type: number
+                    example: 0.0
+                  owner_id:
+                    type: object
+                    nullable: true
+                    example: "null"
+                  price_amount:
+                    type: number
+                    example: 2000.0
+                  price_currency:
+                    type: string
+                    example: EUR
+                  sessions:
+                    type: array
+                    example:
+                    - approval_status: null
+                      approval_status_updated_at: null
+                      approval_status_updated_by: null
+                      guest_lecturer_ids: []
+                      guest_lecturers: []
+                      id: 6141d4b56ab728776800023a
+                      lecturer_ids: []
+                      lecturers: []
+                      room: ""
+                      schedule: default
+                      starts_on: 1632265200
+                    items:
+                      type: object
+                      properties:
+                        approval_status:
+                          type: object
+                          nullable: true
+                          example: "null"
+                        approval_status_updated_at:
+                          type: object
+                          nullable: true
+                          example: "null"
+                        approval_status_updated_by:
+                          type: object
+                          nullable: true
+                          example: "null"
+                        guest_lecturer_ids:
+                          type: array
+                          example: []
+                          items:
+                            type: object
+                        guest_lecturers:
+                          type: array
+                          example: []
+                          items:
+                            type: object
+                        id:
+                          type: string
+                          example: 6141d4b56ab728776800023a
+                        lecturer_ids:
+                          type: array
+                          example: []
+                          items:
+                            type: object
+                        lecturers:
+                          type: array
+                          example: []
+                          items:
+                            type: object
+                        room:
+                          type: string
+                          example: ""
+                        schedule:
+                          type: string
+                          example: default
+                        starts_on:
+                          type: number
+                          example: 1632265200
+                  starts_on:
+                    type: number
+                    example: 0.0
+                  state:
+                    type: string
+                    example: open
+                  state_auto_mode:
+                    type: boolean
+                    example: false
+                  synopsis:
+                    type: object
+                    nullable: true
+                    example: "null"
+                  target_capacity:
+                    type: number
+                    example: 20.0
+                  updated_at:
+                    type: number
+                    example: 1674233623
+    patch:
+      tags:
+      - Core (Student Information System)
+      - Units
+      summary: Register profiles on unit
+      description: Register profiles on unit
+      operationId: registerProfilesOnUnit
+      parameters:
+      - name: unit_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                campus_ids:
+                  type: array
+                  example:
+                  - 5ff317ba9a52af08c10009ca
+                  - 60b8fbca6ab7285790000697
+                  items:
+                    type: string
+                    example: 5ff317ba9a52af08c10009ca
+                custom_name:
+                  type: string
+                  example: My custom unit name 1
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-codegen-request-body-name: body
+  /apis/units/units/{unit_id}/grades:
+    post:
+      tags:
+      - Core (Student Information System)
+      - Student registrations and grades for a unit
+      summary: Update a single student's grades for a unit
+      description: This request allows a single student's grade to be updated for
+        a given unit. The "grade_name" must be either "final" for the final grade
+        or the name of a particular partial grade of the unit e.g. "__coursework".
+      operationId: updateASingleStudentSGradesForAUnit
+      parameters:
+      - name: unit_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: FF-Auth
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                grade_name:
+                  type: string
+                  example: Multiple choice
+                grade_value:
+                  type: string
+                  example: Pass
+                profile_id:
+                  type: string
+                  example: 5fc4ccb1108f0d6e960019a9
+        required: false
+      responses:
+        "200":
+          description: ""
+          content: {}
+      x-codegen-request-body-name: body
+components: {}
+x-original-swagger-version: "2.0"
