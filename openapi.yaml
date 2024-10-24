@@ -65,7 +65,16 @@ info:
   contact: {}
   version: 1.0.0
 servers:
-- url: //%7B%7Bendpoint%7D%7D
+  - url: https://{InstanceUrl}
+    variables:
+      InstanceUrl:
+        default: example.fullfabric.cloud
+        description: Your Full Fabric instance URL
+  - url: https://{FullFabricSubdomain}.staging-fullfabric.cloud
+    variables:
+      FullFabricSubdomain:
+        default: example
+        description: Your Full Fabric Staging Subdomain
 tags:
 - name: Origin (Admissions)
   description: |-
@@ -100,6 +109,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: Get application templates
@@ -341,6 +357,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: Get application template by ID
@@ -459,6 +482,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       requestBody:
         content:
           application/json:
@@ -596,6 +626,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       requestBody:
         content:
           application/json:
@@ -766,6 +803,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: Get applications
@@ -997,6 +1041,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: ""
@@ -1020,6 +1071,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: ""
@@ -1047,6 +1105,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: Application with learner designed curriculum (subjects tab)
@@ -1446,6 +1511,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       requestBody:
         content:
           application/json:
@@ -1490,6 +1562,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: Set an application's fee state as paid
@@ -1638,6 +1717,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: Set an application's fee state as not paid
@@ -1790,6 +1876,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: Set an application's fee state as waived
@@ -1935,6 +2028,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: ""
@@ -1952,6 +2052,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: Get courses
@@ -2319,6 +2426,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       requestBody:
         content:
           multipart/form-data:
@@ -2355,6 +2469,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: Get course
@@ -2446,6 +2567,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       requestBody:
         content:
           multipart/form-data:
@@ -2475,6 +2603,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: ""
@@ -2497,6 +2632,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: ""
@@ -2519,6 +2661,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: ""
@@ -2541,6 +2690,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: ""
@@ -2558,6 +2714,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: ""
@@ -2580,6 +2743,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: ""
@@ -2600,6 +2770,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: ""
@@ -2630,6 +2807,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: ""
@@ -2666,6 +2850,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       requestBody:
         content:
           application/json:
@@ -2708,6 +2899,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       requestBody:
         content:
           application/json:
@@ -2756,6 +2954,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: ""
@@ -2785,6 +2990,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       requestBody:
         content:
           text/plain:
@@ -2817,6 +3029,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       requestBody:
         content:
           text/plain:
@@ -2856,6 +3075,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: GET student registrations and grades for a unit
@@ -3084,6 +3310,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: ""
@@ -3106,6 +3339,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: ""
@@ -3129,6 +3369,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: Get profile transcripts by study plan
@@ -3236,6 +3483,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: Get profile transcripts by study plan
@@ -3344,6 +3598,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: Get a profile's transcript
@@ -3783,6 +4044,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: Get units
@@ -3916,6 +4184,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       requestBody:
         content:
           application/json:
@@ -3962,6 +4237,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       responses:
         "200":
           description: Get unit
@@ -4202,6 +4484,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       requestBody:
         content:
           application/json:
@@ -4245,6 +4534,13 @@ paths:
         in: header
         schema:
           type: string
+        required: true
+      - in: header
+        name: Accept
+        schema:
+          type: string
+          enum: ["application/json;version=2021-04-13", "application/json;version=2018-05-05"]
+        required: true
       requestBody:
         content:
           application/json:
