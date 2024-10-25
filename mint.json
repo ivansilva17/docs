@@ -5,7 +5,7 @@
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.png",
   "colors": {
     "primary": "#4057e3",
     "light": "#4057e3",
@@ -18,12 +18,12 @@
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:support@fullfabric.com"
     }
   ],
   "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "name": "Website",
+    "url": "https://fullfabric.com"
   },
   "tabs": [
     {
@@ -33,103 +33,137 @@
   ],
   "anchors": [
     {
-      "name": "Documentation",
+      "name": "Help Center",
       "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
+      "url": "https://help.fullfabric.com"
     },
     {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
+      "name": "Changelog",
+      "icon": "megaphone",
+      "url": "https://feedback.fullfabric.com/"
     },
     {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "name": "Roadmap",
+      "icon": "road",
+      "url": "https://feedback.fullfabric.com/roadmap"
     }
   ],
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "Introduction",
       "pages": [
-        "introduction",
-        "quickstart",
-        "development"
-      ]
-    },
-    {
-      "group": "Essentials",
-      "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
-      ]
-    },
-    {
-      "group": "API Documentation",
-      "pages": [
-        "api-reference/introduction"
+        "api-reference/introduction",
+        "api-reference/api_versions",
+        "api-reference/authentication",
+        "api-reference/requests",
+        "api-reference/errors",
+        "api-reference/rate_limiting"
       ]
     },
     {
       "group": "Origin (Admissions)",
       "pages": [
-        "api-reference/origin-admissions/get-application-templates",
-        "api-reference/origin-admissions/get-application-template-by-id",
-        "api-reference/origin-admissions/add-choices-to-application-template",
-        "api-reference/origin-admissions/remove-choices-from-application-template",
-        "api-reference/origin-admissions/get-applications",
-        "api-reference/origin-admissions/get-an-application-pdf",
-        "api-reference/origin-admissions/get-an-application-zip",
-        "api-reference/origin-admissions/get-an-application",
-        "api-reference/origin-admissions/delete-an-application",
-        "api-reference/origin-admissions/set-an-applications-fee-state-as-paid",
-        "api-reference/origin-admissions/set-an-applications-fee-state-as-not-paid",
-        "api-reference/origin-admissions/set-an-applications-fee-state-as-waived",
-        "api-reference/origin-admissions/get-applications-for-a-specific-profile",
-        "api-reference/origin-admissions/get-evaluations-for-a-specific-profiles-application",
-        "api-reference/origin-admissions/get-an-evaluation",
-        "api-reference/origin-admissions/get-evaluations-for-a-specific-evaluation-template"
+          {
+              "group": "Application templates",
+              "pages": [
+                "api-reference/origin-admissions/get-application-templates",
+                "api-reference/origin-admissions/get-application-template-by-id",
+                "api-reference/origin-admissions/add-choices-to-application-template",
+                "api-reference/origin-admissions/remove-choices-from-application-template"
+              ]
+          },
+          {
+              "group": "Applications",
+              "pages": [
+                "api-reference/origin-admissions/get-applications",
+                "api-reference/origin-admissions/get-an-application-pdf",
+                "api-reference/origin-admissions/get-an-application-zip",
+                "api-reference/origin-admissions/get-an-application",
+                "api-reference/origin-admissions/delete-an-application",
+                "api-reference/origin-admissions/set-an-applications-fee-state-as-paid",
+                "api-reference/origin-admissions/set-an-applications-fee-state-as-not-paid",
+                "api-reference/origin-admissions/set-an-applications-fee-state-as-waived",
+                "api-reference/origin-admissions/get-applications-for-a-specific-profile"
+              ]
+          },
+          {
+              "group": "Evaluations",
+              "pages": [
+                "api-reference/origin-admissions/get-evaluations-for-a-specific-profiles-application",
+                "api-reference/origin-admissions/get-an-evaluation",
+                "api-reference/origin-admissions/get-evaluations-for-a-specific-evaluation-template"
+              ]
+          }
       ]
     },
     {
       "group": "Core (Student Information System)",
       "pages": [
-        "api-reference/core-student-information-system/get-courses",
-        "api-reference/core-student-information-system/create-a-course",
-        "api-reference/core-student-information-system/get-course",
-        "api-reference/core-student-information-system/update-a-course",
-        "api-reference/core-student-information-system/delete-a-course",
-        "api-reference/core-student-information-system/get-lecturers",
-        "api-reference/core-student-information-system/get-lecturer",
-        "api-reference/core-student-information-system/deprecated-register-a-profile-to-a-course-on-their-transcript",
-        "api-reference/core-student-information-system/create-a-transcript-for-a-profiles-role-for-a-class",
-        "api-reference/core-student-information-system/add-and-register-a-profile-to-courses-on-their-transcript",
-        "api-reference/core-student-information-system/unregister-a-profile-from-multiple-courses-on-their-transcript",
-        "api-reference/core-student-information-system/deprecated-unregister-a-profile-from-a-course-on-their-transcript",
-        "api-reference/core-student-information-system/create-registrations-and-grades-for-a-single-student-for-multiple-units",
-        "api-reference/core-student-information-system/update-registrations-and-grades-for-a-single-student-for-multiple-units",
-        "api-reference/core-student-information-system/get-student-registrations-and-grades-for-a-unit",
-        "api-reference/core-student-information-system/get-lecturer-costs-for-each-session",
-        "api-reference/core-student-information-system/get-class-study-plan",
-        "api-reference/core-student-information-system/get-profile-transcripts-by-profile",
-        "api-reference/core-student-information-system/get-profile-transcripts-by-study-plan",
-        "api-reference/core-student-information-system/get-a-profiles-transcript",
-        "api-reference/core-student-information-system/get-units",
-        "api-reference/core-student-information-system/create-unit",
-        "api-reference/core-student-information-system/get-unit",
-        "api-reference/core-student-information-system/register-profiles-on-unit",
-        "api-reference/core-student-information-system/update-a-single-students-grades-for-a-unit"
+          {
+              "group": "Courses",
+              "pages": [
+                "api-reference/core-student-information-system/get-courses",
+                "api-reference/core-student-information-system/create-a-course",
+                "api-reference/core-student-information-system/get-course",
+                "api-reference/core-student-information-system/update-a-course",
+                "api-reference/core-student-information-system/delete-a-course"
+              ]
+          },
+          {
+              "group": "Units",
+              "pages": [
+                "api-reference/core-student-information-system/get-units",
+                "api-reference/core-student-information-system/create-unit",
+                "api-reference/core-student-information-system/get-unit",
+                "api-reference/core-student-information-system/register-profiles-on-unit",
+                "api-reference/core-student-information-system/update-a-single-students-grades-for-a-unit"
+              ]
+          },
+          {
+              "group": "Student registrations and grades for a unit",
+              "pages": [
+                "api-reference/core-student-information-system/get-student-registrations-and-grades-for-a-unit",
+                "api-reference/core-student-information-system/create-registrations-and-grades-for-a-single-student-for-multiple-units",
+                "api-reference/core-student-information-system/update-registrations-and-grades-for-a-single-student-for-multiple-units"
+              ]
+          },
+          {
+              "group": "Class Study Plan",
+              "pages": [
+                "api-reference/core-student-information-system/get-class-study-plan"
+              ]
+          },
+          {
+              "group": "Lecturers",
+              "pages": [
+                "api-reference/core-student-information-system/get-lecturers",
+                "api-reference/core-student-information-system/get-lecturer"
+              ]
+          },
+          {
+              "group": "Transcripts",
+              "pages": [
+                "api-reference/core-student-information-system/get-profile-transcripts-by-study-plan",
+                "api-reference/core-student-information-system/get-profile-transcripts-by-profile",
+                "api-reference/core-student-information-system/get-a-profiles-transcript",
+                "api-reference/core-student-information-system/unregister-a-profile-from-multiple-courses-on-their-transcript",
+                "api-reference/core-student-information-system/create-a-transcript-for-a-profiles-role-for-a-class"
+          
+              ]
+          },
+          {
+              "group": "Session Lecturer Costs",
+              "pages": [
+                "api-reference/core-student-information-system/get-lecturer-costs-for-each-session"
+              ]
+          }
       ]
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://linkedin.com/company/mintlify"
+    "x": "https://x.com/fullfabric",
+    "facebook": "https://www.facebook.com/fullfabriccrm/",
+    "linkedin": "https://linkedin.com/company/fullfabric"
   },
   "openapi": "openapi.yaml"
 }

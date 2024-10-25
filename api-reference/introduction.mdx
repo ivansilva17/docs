@@ -1,33 +1,64 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: Introduction
+description: 'Welcome to the Full Fabric Public APIs documentation'
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+<img
+  className="block dark:hidden"
+  src="/images/hero-dark.svg"
+  alt="Hero Light"
+/>
+<img
+  className="hidden dark:block"
+  src="/images/hero-dark.svg"
+  alt="Hero Dark"
+/>
 
-## Welcome
+## Setting up
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+Getting started with Full Fabric Public APIs
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+<CardGroup cols={2}>
+  <Card
+    title="API Versions"
+    icon="code-compare"
+    href="/api-reference/api_versions"
+  >
+    Full Fabric API Versions
+  </Card>
+  <Card
+    title="Authentication"
+    icon="lock"
+    href="/api-reference/authentication"
+  >
+    Full Fabric API Authentication
+  </Card>
+</CardGroup>
 
-## Authentication
+## Products
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+Update your docs to your brand and add valuable content for the best user conversion.
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
-```
+<CardGroup cols={2}>
+  <Card
+    title="Foundation CRM"
+    icon="users"
+    href="https://mintlify.com/docs/settings/global"
+  >
+    Foundation CRM Endpoints
+  </Card>
+  <Card
+    title="Origin (Admissions)"
+    icon="file-circle-check"
+    href="https://mintlify.com/docs/api-playground/openapi"
+  >
+    Origin Endpoints
+  </Card>
+  <Card
+    title="Core (Student Information System)"
+    icon="graduation-cap"
+    href="https://mintlify.com/docs/components/accordion"
+  >
+    Core Endpoints
+  </Card>
+</CardGroup>

@@ -1,0 +1,38 @@
+---
+title: 'Rate limiting'
+description: 'For API requests using token-based authentication, you can make up to 10000 requests per hour.'
+---
+
+The maximum number of requests you are permitted to make
+
+- per 8 seconds is 40
+- per 60 seconds is 180
+- per 3600 seconds is 10000
+
+
+## Abuse rate limits
+
+In order to maintain the quality of the service, additional rate limits may apply to some actions when using the API. For example, using the API too rapidly, polling aggressively, making multiple concurrent requests, or repeatedly request data that is computationally expensive may result in abuse rate limiting.
+
+```json
+200 - OK: Everything worked as expected.
+400 - Bad Request: The request was unacceptable, often due to missing a required parameter.
+401 - Unauthorized: No valid API key provided.
+402 - Request Failed: The parameters were valid but the request failed.
+404 - Not Found: The requested resource doesn't exist.
+422 - Unprocessable Entity: The request is understood but invalid, often due to failed validation.
+429 - Too Many Requests: Too many requests hit the API too quickly.
+50x - Server Errors: Something went wrong on our end. (These are rare.)
+```
+
+## Dealing with API errors
+You may find that you've encountered successive errors when trying to access the API.
+
+<Note>
+
+To avoid hitting this limit, you should ensure your application follows the guidelines below:
+
+- make requests for a single token serially. Do not make requests for a single token concurrently.
+- if you're making a large number of POST, PATCH, PUT, or DELETE requests for a single token, wait at least one second between each request.
+- when you have been limited, use the Retry-After response header to slow down. The value of the Retry-After header will always be an integer, representing the number of seconds until the rate limiting expires.
+</Note>

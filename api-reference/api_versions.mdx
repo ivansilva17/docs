@@ -1,0 +1,23 @@
+---
+title: 'API Versions'
+description: 'Your API version controls the API you see (e.g. what properties you
+see in responses, what parameters you’re permitted to send in requests).'
+---
+
+<Note>
+  When we change the API in a backwards-incompatible way, we release a new dated version.
+</Note>
+
+## Specifying API version
+
+All requests require an API version. You can specify a version via the Accept header as below.
+
+```json
+Accept: application/json;version=2021-04-13
+```
+Alternatively, you can also the specify a version via an X-API-Version header in which case you can remove the version from the Accept header.
+
+```json
+X-API-Version: 2021-04-13
+Accept: application/json
+```
