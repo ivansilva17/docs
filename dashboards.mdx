@@ -1,4 +1,107 @@
 ---
 title: "Dashboards"
 description: "Description of your new file."
+mode: "wide"
 ---
+
+## What are Full Fabric Dashboards?
+
+FF Dashboards provide powerful visual tools that let clients create and customise visual reports tailored to their needs. With a variety of options like bar and line graphs, they offer clear and dynamic insights into applicant trends, student progress, course performance, and institutional metrics. Clients can input and modify data as needed, enabling real-time tracking of key indicators such as enrolment rates, retention statistics, academic performance, and program efficiency. These reports support data-driven decision-making, accreditation requirements, funding evaluations, and overall institutional strategy, helping higher education institutions to optimize their operations, improve applicant desire and enhance student success.
+
+## How can they be useful?
+
+### Applicant & Enrolment Rates
+
+Understanding the efficiency of the admissions pipeline is crucial for universities and master's schools. FF Dashboards allow institutions to track each stage of the applicant journey—from initial prospect interest to application submission, acceptance, and final enrolment. By analysing conversion rates between these stages, institutions can pinpoint bottlenecks in the recruitment process and refine outreach strategies. For example, if a high number of accepted students fail to enrol, this may indicate issues with communication, financial aid, or onboarding procedures.
+
+### **Retention Statistics**
+
+Ensuring students remain engaged and complete their studies is a top priority for educational institutions. FF Dashboards provide real-time insights into student retention rates, helping administrators identify patterns in dropouts and withdrawals. By analysing data such as attendance, course engagement, academic performance, and even student feedback, universities can intervene early with targeted support—whether through academic advising, mental health services, or financial aid adjustments. This proactive approach reduces attrition and improves overall student satisfaction.
+
+### **Academic Performance & Program Efficiency**
+
+Tracking student success at both individual and institutional levels is made seamless with FF Dashboards. Faculty and administrators can monitor grades, completion rates, and exam performance to identify areas where students struggle. If a particular course has a consistently high failure rate, it may indicate issues with course structure, teaching methods, or curriculum alignment. Additionally, comparative analysis across programs allows institutions to allocate resources effectively, ensuring that faculty, technology, and financial investments align with student needs and institutional goals.
+
+### **Prospect-to-Enrolment Efficiency**
+
+Recruitment teams can leverage FF Dashboards to measure the effectiveness of marketing campaigns, outreach events, and admissions policies. By tracking which channels (e.g., online applications, recruitment fairs, or direct outreach) generate the highest applicant conversion rates, institutions can optimize their efforts and allocate budgets more efficiently. This insight helps ensure that prospective students receive the right level of engagement, increasing the likelihood of enrolment.
+
+### **Driving Institutional Success**
+
+Ultimately, FF Dashboards empower universities and master’s schools with the ability to make data-driven decisions that enhance student experiences, improve academic outcomes, and ensure long-term institutional success. By turning complex data into actionable insights, institutions can adapt to changing educational landscapes and remain competitive in attracting, enrolling, and retaining top talent.
+
+## How to Create a Dashboard in Full Fabric Analytics Tool
+
+Dashboards in FF Analytics allow you to visualize important data in a structured way. Follow these steps to create a new dashboard and add widgets to display specific metrics.
+
+### **Step 1: Access the Dashboards Section**
+
+1. Log in to **Full Fabric.**
+
+2. Navigate to the **Analytics** section from the main menu (left side of the screen)
+
+3. Click on **Dashboards** to enter the dashboard management area.
+
+### **Step 2: Create a New Dashboard**
+
+1. In the **top-right corner**, click the **"Add a New Dashboard"** button.
+
+2. A prompt will appear asking for a **dashboard name**.
+
+   <img height="530" width="530" src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXfEU7cPo5jILce8RrWkPipsV9YEjH4dtew4ET93VrGJux8A-PZPQfclPbXAXsCrsavZJPXtuHsucQYWg8vGPaybfumvrxMJ6CHbG-gCEB01og9zqZO9R5FKAViJ0omY_nP3tFKI?key=pWS1K-V40sCAXgJWMc4qUmDV" />
+
+3. Enter a descriptive name that reflects the purpose of the dashboard (e.g., "Started Application" or "Enrolled Students").
+
+4. Click **"Add Dashboard"** to confirm.
+
+### **Step 3: Add Widgets to the Dashboard**
+
+Once your dashboard is created, you’ll need to add widgets to display the data.
+
+Open your newly created dashboard.
+
+In the **top-right corner**, click **"Add a New Widget"**.
+
+A setup window will appear where you can configure the widget.
+
+<img height="530" width="530" src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXdjlbYyiMR4dc2FRjW6vQJFBjhHHOB066jQPcAjCfB739H5wmYnmdF34ZI115fZXJfk49Pjcn4ravisCJLa1MWRxODd7MqSp7IIlNm6CdVaUPqD8W_eBaeSy55Dki2PqqRJJA16yA?key=pWS1K-V40sCAXgJWMc4qUmDV" />
+
+### **Step 4: Configure the Widget**
+
+1. **Select Widget Type:**
+
+   * From the dropdown menu, choose the type of visualisation that best represents your data:
+
+     * **Bar Graph** → Ideal for comparisons (e.g., enrolment rates per month).
+
+     * **Line Graph** → Best for tracking trends over time (e.g., retention rates).
+
+     * **Area Chart** → Useful for percentage breakdowns (e.g., applicant sources).
+
+<img height="530" width="530" src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXfaGYxsklLSG0I5n0-jod_mC6QzxtSnr6RvUQu-fqy21KSVhOWnNLrYKTFmegQTbmvF7DZ4bwz5QsVoGSuVYGCkOsmjmkil7V9i3ucQJIxLQr834s3wQ6sL7U2CV3_-h1JDjvuGsg?key=pWS1K-V40sCAXgJWMc4qUmDV" />
+
+1. **Name the Widget:**
+
+   * Enter a clear, descriptive name (e.g., "Monthly Applicant Submissions").
+
+2. **Provide the Data Source (Endpoint URL):**
+
+   * Paste the relevant **API URL** that fetches the required data.
+
+Example:
+
+/profiles/data/comparison/monthly?states=\["applicant::submitted"]\&classes=\["\<class-ID>"]\&cumulative=true\&start=applications\_opens\_on\&end=class\_starts\_on
+
+* Ensure the endpoint includes the right filters for the specific data you want to display.
+
+**Note:** The endpoint determines what data will be shown, so it’s crucial to use the correct parameters.
+
+### **Step 5: Save and View the Dashboard**
+
+1. After configuring the widget, click **"Save"** to add it to your dashboard.
+
+2. Repeat the process for additional widgets if needed.
+
+3. Once all widgets are added, you can **view, edit, and rearrange** them for better visibility.
+
+By following these steps, you can create **custom dashboards** tailored to track key metrics like **applicant trends, enrolment efficiency, retention statistics, and performance insights**. These dashboards provide a **real-time, visual representation** of your data, helping institutions make informed decisions.
